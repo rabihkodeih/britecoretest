@@ -26,6 +26,6 @@ Finally the **EnumValue** model represents the different enum values that are as
 
 # Frontend
 
-The whole frontend application was implemented in a single relatively small javascript file `app.js`. The reactive framework ***Vue.js*** was the main library used in the backend along with ***jquery3***, ***axios.js*** (promise based ajax calls), ***bootstrap4*** (for styling) and ***gijgo.js*** (used to render the date-picker widget). 
+The whole frontend application was implemented in a single relatively small javascript file `app.js`. The reactive framework ***Vue.js*** was the main library used in the backend along with ***jquery3***, ***axios.js*** (promise based ajax calls), ***bootstrap4*** (for styling) and ***gijgo.js*** (used to render the date-picker widget). The modern flavor of ***JavaScript ES6*** has been used in `app.js`.
 
 The main app was implemented using two components: one component to model the different field types and another component to model the date-widget. Note that django reversed url strings where injected in the javascript code instead of hardcoding api urls to allow the project to be deployed by zappa under different guises (*dev*, *staging*, *production*). A fully reactive model was used to render the main project page view. This proved to be very versatile as it greatly simplified the code of the app in comparison to using more traditional event-driven methods. Finaly, a *css* file was used to finetune some styling elements in the main page.
