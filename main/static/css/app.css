@@ -1,0 +1,98 @@
+body {
+    font-family: sans-serif;
+    font-size: 100%;        
+}  
+
+.row {
+    padding: 20px;
+}
+
+.col {
+	background: rgb(240, 240, 245);;
+	border: 1px solid grey;
+	border-radius: 5px;
+	padding: 10px;
+}
+
+.btn_container {
+    margin-bottom:  10px;	
+}
+
+.btn_container button {
+	width: 250px;
+	text-align: left;
+}
+
+.field {
+    padding: 2px;
+	margin-bottom: 5px;
+}
+
+.field input {
+	width: 250px;
+}
+
+.field input[type=radio] {
+	width: auto;
+    margin-top: 4px;
+    vertical-align: top;
+}
+
+.field label {
+	margin-bottom: 0;
+}
+
+.field .form-control {
+	display: inline-block;
+	padding: 2px;
+}
+
+.field_name {
+    display: inline-block;
+    text-align: right;
+    width: 150px;
+    font-size:80%;
+    font-weight: bold;
+    margin-right: 5px;
+}
+
+.field_name.enum {
+	vertical-align: top;
+}
+
+.field_enum {
+	display: inline-block;
+    width: 200px;
+    font-size:95%;
+}
+
+/* Settings for Gijgo Date Picker Widget */
+
+.date_holder {
+    display:inline-block;
+    vertical-align:middle;
+}
+
+.gj-datepicker-md {
+    display: inline-block !important;	
+}
+
+.gj-datepicker [role="input"] {
+	width: 250px !important;
+}
+
+.gj-datepicker-md [role="right-icon"] {
+	top: 4px !important;
+	right: 2px !important;
+}
+
+.gj-textbox-md {
+	font-size: 1rem !important;
+	line-height: 1.5 !important;
+	color: #495057 !important;
+	background-color: #fff !important;
+	background-clip: padding-box !important;
+	border: 1px solid #ced4da !important;
+	border-radius: .25rem !important;
+	transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out !important	
+}

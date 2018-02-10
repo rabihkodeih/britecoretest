@@ -1,0 +1,15 @@
+{
+    "dev": {
+        "aws_region": "us-east-2",
+        "django_settings": "britecore.settings",
+        "profile_name": "default",
+        "exclude": ["localsettings.*"],
+        "project_name": "src",
+        "runtime": "python3.6",
+        "s3_bucket": "zappa-ayhk9yh31",
+        "vpc_config" : {
+            "SubnetIds": [ "subnet-b90aa0d1","subnet-6f5eb315","subnet-e76e49aa" ],
+            "SecurityGroupIds": [ "sg-3a7adb51" ]
+        }
+    }
+}
