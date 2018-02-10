@@ -5,6 +5,9 @@
 ## Server Side
 ***Django v2.02*** with ***Python 3.6*** and ***Postgres10*** was used as the backbone of the server. Two API endpoints have and a single page view have been implemented as in the requirements. The deployment scheme used AWS services of ***S3***, ***Lambda***, ***RDS*** and ***CloudFront***. ***Zappa*** (along with ***virtualenv***) was used for the whole deployment process. Static files were served from ***S3*** bucket instance. Finaly, its worth noting that test data was generated using a custom written django managment command script named `createtestdata.py`.
 
+A working instance of the project can be found at: 
+https://f2uddx7bli.execute-api.us-east-2.amazonaws.com/dev/
+
 ## Db Model
 
 There are four models:
