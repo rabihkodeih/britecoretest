@@ -3,7 +3,7 @@
 # Backend
 
 ## Server Side
-***Django v2.02*** with ***Python 3.6*** and ***Postgres10*** was used as the backbone of the server. Two API endpoints have and a single page view have been implemented as in the requirements. The deployment scheme used AWS services of ***S3***, ***Lambda***, ***RDS*** and ***CloudFront***. ***Zappa*** (along with ***virtualenv***) was used for the whole deployment process. Static files were served from ***S3*** bucket instance. Finaly, its worth noting that test data was generated using a custom written django managment command script named `createtestdata.py`.
+***Django v2.02*** with ***Python 3.6*** and ***Postgres10*** was used as the backbone of the server. Two API endpoints have and a single page view have been implemented as in the requirements. The deployment scheme used AWS services of ***S3***, ***Lambda***, ***RDS*** and ***CloudFront***. ***Zappa*** (along with ***virtualenv***) was used for the whole deployment process. Static files were served from ***S3*** bucket instance. A `local_settings.py` file was used to separate the local development settings from the production settings, this file isn't tracked by either ***zappa*** nor ***git***. Finaly, its worth noting that test data was generated using a custom written django managment command script named `createtestdata.py`.
 
 A working instance of the project can be found at: 
 https://f2uddx7bli.execute-api.us-east-2.amazonaws.com/dev/
