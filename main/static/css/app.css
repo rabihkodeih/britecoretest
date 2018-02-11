@@ -29,7 +29,7 @@ body {
 }
 
 .field input {
-	width: 250px;
+	max-width: 270px;
 }
 
 .field input[type=radio] {
@@ -62,7 +62,6 @@ body {
 
 .field_enum {
 	display: inline-block;
-    width: 200px;
     font-size:95%;
 }
 
@@ -71,14 +70,13 @@ body {
 .date_holder {
     display:inline-block;
     vertical-align:middle;
+    width: 100%;
+    max-width: 270px;
 }
 
 .gj-datepicker-md {
-    display: inline-block !important;	
-}
-
-.gj-datepicker [role="input"] {
-	width: 250px !important;
+    display: inline-block !important;
+    width: 100%;	
 }
 
 .gj-datepicker-md [role="right-icon"] {

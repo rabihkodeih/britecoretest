@@ -8,21 +8,6 @@ from django.urls.conf import path
 from django.views.decorators.http import require_http_methods
 from main.models import RiskType
 
-#TODO: setup a VPC (pattern: VPC with a Public subnet and Private subnet)
-#TODO: setup the database
-#TODO: write a command to fill in the database with the test data, and run this command using zappa on the lambda instance
-
-#TODO: fix the group selection for enums
-
-#TODO: generate ER model using the tool that is used in tms school django app
-#TODO: write a comprehensive readme.txt file that explains everything (github readme file better)
-#        mention that error checking was removed for brevity
-#        mention something about the Virtual Private Cloud (VPC) (it must be usef for more security etc...)
-#        mention that all regions are: US East (Ohio), (us-east-2)
-
-#TODO: test on different agents from the developer menu in safari
-#TODO: test form different machines
-
 
 @require_http_methods(["GET"])
 def risktype(request, risktype_id=0):
