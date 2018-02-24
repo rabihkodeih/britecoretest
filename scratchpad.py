@@ -26,18 +26,14 @@ if __name__ == '__main__':
     res = parseParenthesis(S)
     print(res)        
     
-# Business Requirements: 
-#TODO: think carefully about the api views and how to imbed the authentication system in them
-#TODO: make sure that in all files, we have imports are properly formatted
+# Backend: 
+#TODO: comments, 
+#TODO: functions and variables were cleanly named
 
-# Backend: standard project layout templates, comments, functions and variables were cleanly named, 
-#          process flows followed accepted design patterns, Pep8
-#    *use serializers from Django Rest Framework
 # Frontend: component framework Element.io, UX made sense to the user
 # Tests: API full frontend E2E tests, CI platform such as TravisCI or CircleCI to the repo
 # Deployment: zappa, Cloud Formation scripts
 # Documentation: how to deploy the app, screenshots of rendered UI, ERDs, workflows, etc
-
 
 # My scores:
 #     Requiremtns    5
@@ -50,6 +46,7 @@ if __name__ == '__main__':
 
 
 
+#TODO: make sure that in all files, we have imports are properly formatted
 
 
 

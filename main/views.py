@@ -14,5 +14,5 @@ def home(request):
     return render(request, 'home.html', context)
 
 
-urls = [path('', home, name='url_home'),
+urls = [path('', home, name='url_default'),
         path('home/', home, name='url_home')]

@@ -4,7 +4,10 @@ Created on Feb 24, 2018
 @author: rabihkodeih
 '''
 
-from main.models import RiskType, FieldType, Field, EnumValue
+from main.models import RiskType
+from main.models import FieldType
+from main.models import Field
+from main.models import EnumValue
 from rest_framework import serializers  # @UnresolvedImport
 
 
@@ -39,6 +42,4 @@ class RiskTypeShallowSerializer(serializers.ModelSerializer):
     class Meta:
         model = RiskType
         fields = ('id', 'name')
-
-
 
