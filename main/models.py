@@ -29,6 +29,9 @@ class RiskType(models.Model):
     def __str__(self):
         return self.name
 
+#TODO: implement
+class RiskInstance(models.Model):
+    pass
 
 class FieldType(models.Model):
     name = models.CharField(max_length=16)

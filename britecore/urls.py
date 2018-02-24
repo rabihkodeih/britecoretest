@@ -21,7 +21,8 @@ from main import views
 from main import api
 
 urlpatterns = [
-    path('admin/', admin.site.urls), 
+    path('admin/', admin.site.urls),
+    path('accounts/', include('django.contrib.auth.urls')), 
     url(r'', include(views.urls)),
-    url(r'api/', include(api.urls))
+    url(r'api/', include(api.urls)),
 ]

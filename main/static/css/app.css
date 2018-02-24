@@ -5,6 +5,7 @@ body {
 
 .row {
     padding: 20px;
+    margin-bottom: -20px;
 }
 
 .col {
@@ -12,6 +13,39 @@ body {
 	border: 1px solid grey;
 	border-radius: 5px;
 	padding: 10px;
+}
+
+.login {
+	width: 50%;
+	margin: 0 auto;
+	margin-top: 40px;
+	margin-bottom: 40px;
+}
+
+.login h2,
+.login form div {
+	text-align: center;
+}
+
+.login form label {
+	width: 30%;
+	text-align: right;
+}
+
+.login form input {
+	width: auto;
+}
+
+.header_right {
+	float:right;
+}
+
+.header_left {
+	float:left;
+}
+
+.header_account {
+	margin-top: 15px;
 }
 
 .btn_container {

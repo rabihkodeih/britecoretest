@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+	    <div id="app">
+	        <div class="row">
+	            <div class="col">
+	                <p> Create a new <b>Policy</b> Form from one of the following <b>Risk Types</b>: </p>
+	                <ul>
+	                   <li v-for="rt in risktypes" class="btn_container">
+	                       <button class="btn btn-primary" v-on:click="on_click(rt.id)"> [[ rt.name ]] </button>
+	                   </li>
+	                </ul>
+	            </div>
+	        </div>
+	        <div class="row" v-if="risktype">
+	            <div class="col">
+	                <h2>Policy of risk type: [[risktype.name]]</h2>
+	                
+	                <form id='policy_form' >
+	                    <field_widget v-bind:fields="risktype.fields"></field_widget>
+	                </form>
+	                
+	            </div>
+	        </div>
+	    </div>
+	    
+{% endblock %}
+
+
+    

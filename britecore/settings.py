@@ -47,7 +47,6 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    #'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -147,4 +146,9 @@ STATIC_URL = local_settings.get('STATIC_URL', "https://%s/" % AWS_S3_CUSTOM_DOMA
 STATICFILES_STORAGE = local_settings.get('STATICFILES_STORAGE', 'storages.backends.s3boto.S3BotoStorage')
 
 
+# Login Specific Settings
+
+#LOGIN_REDIRECT_URL = 'url_home'
+
+LOGOUT_REDIRECT_URL = 'url_home'
 

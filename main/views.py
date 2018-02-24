@@ -5,13 +5,14 @@ Created on Feb 4, 2018
 '''
 from django.urls.conf import path
 from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
 
 
-
-def index(request):
+@login_required
+def home(request):
     context = {}
-    return render(request, 'index.html', context)
+    return render(request, 'home.html', context)
 
 
-urls = [path('', index, name='url_index'),
-        path('index/', index, name='url_index')]
+urls = [path('', home, name='url_home'),
+        path('home/', home, name='url_home')]
