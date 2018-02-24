@@ -6,6 +6,7 @@ Created on Feb 9, 2018
 
 from django.core.management.base import BaseCommand
 from main.models import EnumValue, RiskType, FieldType, Field
+from django.contrib.auth.models import User
 
 
 FIELDTYPES = [('Enum', r'.+', False),
@@ -15,11 +16,13 @@ FIELDTYPES = [('Enum', r'.+', False),
 
 
 RISKTYPES = [{'name': 'CyberLiabilityCoverage',
+              'username': 'rabih',
               'fields': [('Type of Coverage', 'Enum', ('DDOS Attack', 'Compromise of Credentials', 'Malware Infection')),        
                          ('Customer Name', 'Text', ()),
                          ('Coverage Limit', 'Number', ()),
                          ('Starting Date', 'Date', ())]},
              {'name': 'Prize',
+              'username': 'rabih',
               'fields': [('Ammount', 'Number', ()),
                          ('Customer Name', 'Text', ()),
                          ('Customer Age', 'Number', ()),
@@ -27,12 +30,14 @@ RISKTYPES = [{'name': 'CyberLiabilityCoverage',
                          ('Due Date', 'Date', ()),
                          ('Prize Type', 'Enum', ('Major', 'Minor'))]},
              {'name': 'Property',
+              'username': 'phil',
               'fields': [('Address', 'Text', ()),
                          ('ZipCode', 'Text', ()),
                          ('Property Type', 'Enum', ('Private Property', 'Government Building', 'Church', 'Land')),
                          ('Coverage B Limit', 'Number', ()),
                          ('Date of Renewal', 'Date', ())]},
              {'name': 'Automobile',
+              'username': 'phil',
               'fields': [('Brand', 'Text', ()),
                          ('Automobile Type', 'Enum', ('Car', 'Truck', 'Minivan', 'Motorbike')),
                          ('Customer Name', 'Text', ()),
@@ -57,8 +62,15 @@ class Command(BaseCommand):
             
         for risktype in RISKTYPES:
             name = risktype['name']
+            username = risktype['username']
             fields = risktype['fields']
-            risktype = RiskType(name=name)
+            try:
+                user = User.objects.get(username=username)
+            except:
+                message = 'Could not create test data, user with username "%s" does not exit. Please create this user and try again.'
+                self.stdout.write(self.style.ERROR(message % username))
+                exit()
+            risktype = RiskType(name=name, user=user)
             risktype.save()
             for ith, (name, field_type_name, enum_values) in enumerate(fields):
                 field_type = FieldType.objects.get(name=field_type_name)

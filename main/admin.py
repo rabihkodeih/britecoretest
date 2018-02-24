@@ -7,7 +7,7 @@ from main.models import EnumValue
 # Register your models here.
 
 class RiskTypeAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name')
+    list_display = ('id', 'name', 'user')
 
 class FieldTypeAdmin(admin.ModelAdmin):
     list_display = ('id', 'name', 'regex_validator', 'nullable')

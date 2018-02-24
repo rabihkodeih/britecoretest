@@ -28,8 +28,7 @@ if __name__ == '__main__':
     
 # Business Requirements: 
 #TODO: think carefully about the api views and how to imbed the authentication system in them
-#TODO: add lists of risk instances that belong to a user account
-
+#TODO: make sure that in all files, we have imports are properly formatted
 
 # Backend: standard project layout templates, comments, functions and variables were cleanly named, 
 #          process flows followed accepted design patterns, Pep8

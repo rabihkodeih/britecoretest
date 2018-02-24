@@ -36,6 +36,10 @@ body {
 	width: auto;
 }
 
+ul.errorlist li {
+	color: rgb(255,0,0);
+}
+
 .header_right {
 	float:right;
 }

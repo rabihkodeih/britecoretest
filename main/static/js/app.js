@@ -33,7 +33,7 @@ Vue.component("field_widget", {
 	            <span class="field_name enum">{{field.name}}</span>
 	            <span class="field_enum">
 	                <div v-for="ev in field.enum_values">
-	                    <input type="radio" v-bind:name="field.html_input_name" v-bind:value="ev"> <label>{{ev}}</label>
+	                    <input type="radio" v-bind:name="field.name" v-bind:value="ev"> <label>{{ev.value}}</label>
 	                </div>
 	            </span>
 	        </div>

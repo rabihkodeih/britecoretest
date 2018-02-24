@@ -1,15 +1,17 @@
 <div class="row">
     <div class="col">
         <div class="header_left">
-           <h1>BriteCore Incurance</h1>
+           <h1>BriteCore Insurance</h1>
         </div>
         <div class="header_right">
-            {% if user.is_authenticated %}
-                <p class="header_account">Hi {%if user.first_name%}{{user.first_name}}{%else%}{{user.username}}{%endif%},
-                <a href="{% url 'logout' %}">logout</a></p>
-            {% else %}
-                <p class="header_account"><a href="{% url 'login' %}">login</a></p>
-            {% endif %}
+            {% if not hide_account %}
+	            {% if user.is_authenticated %}
+	                <p class="header_account">Hi {%if user.first_name%}{{user.first_name}}{%else%}{{user.username}}{%endif%},
+	                <a href="{% url 'logout' %}">logout</a></p>
+	            {% else %}
+	                <p class="header_account"><a href="{% url 'login' %}">login</a></p>
+	            {% endif %}
+	        {% endif %}
         </div>
     </div>
 </div>

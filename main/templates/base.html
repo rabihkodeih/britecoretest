@@ -35,7 +35,9 @@
 		</main>
     </div>
     
-    <script type="text/javascript" src="{% static 'js/app.js'%}"></script>    
+    {% if user.is_authenticated %}    
+        <script type="text/javascript" src="{% static 'js/app.js'%}"></script>    
+    {% endif %}
 </body>
 
 </html>
