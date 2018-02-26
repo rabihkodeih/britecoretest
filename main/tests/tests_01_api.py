@@ -71,7 +71,7 @@ class APITestCase(TestCase):
         response = c.get('/api/risktype/%s' % risktype_id, follow=True)
         nominal_response_content = b'''{"id": 8, "name": "Automobile", "fields": [{"id": 36, "name": "Brand", "type": {"id": 8, "name": "Text", "regex_validator": ".*", "nullable": true}, "order": 1, "enum_values": []}, {"id": 37, "name": "Automobile Type", "type": {"id": 5, "name": "Enum", "regex_validator": ".+", "nullable": false}, "order": 2, "enum_values": [{"value": "Car"}, {"value": "Truck"}, {"value": "Minivan"}, {"value": "Motorbike"}]}, {"id": 38, "name": "Customer Name", "type": {"id": 8, "name": "Text", "regex_validator": ".*", "nullable": true}, "order": 3, "enum_values": []}, {"id": 39, "name": "Coverage Limit", "type": {"id": 7, "name": "Number", "regex_validator": "[-.0-9]+", "nullable": false}, "order": 4, "enum_values": []}, {"id": 40, "name": "Expiry Date", "type": {"id": 6, "name": "Date", "regex_validator": "\\\\d{4}-\\\\d{2}-\\\\d{2}", "nullable": false}, "order": 5, "enum_values": []}]}'''
         self.assertEqual(response.status_code, 200)
-        # ids may change so we remove them here form the test strings
+        # ids may change so we normalize them here in the test strings
         nominal_response_content = normalize_ids(nominal_response_content)
         response_content = normalize_ids(response.content)
         self.assertEqual(response_content, nominal_response_content)
@@ -95,7 +95,7 @@ class APITestCase(TestCase):
         response = c.get('/api/risktypes/', follow=True)
         nominal_response_content = b'''[{"id": 16, "name": "Automobile"}, {"id": 15, "name": "Property"}]'''
         self.assertEqual(response.status_code, 200)
-        # ids may change so we remove them here form the test strings
+        # ids may change so we normalize them here in the test strings
         nominal_response_content = normalize_ids(nominal_response_content)
         response_content = normalize_ids(response.content)
         self.assertEqual(response_content, nominal_response_content)
