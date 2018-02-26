@@ -12,7 +12,6 @@ from main.decorators import requires_authentication
 from rest_framework.decorators import api_view  # @UnresolvedImport
 
 
-
 @api_view(["GET"])
 @requires_authentication
 def risktype(request, risktype_id=0):

@@ -69,7 +69,7 @@ class Command(BaseCommand):
             except:
                 message = 'Could not create test data, user with username "%s" does not exit. Please create this user and try again.'
                 self.stdout.write(self.style.ERROR(message % username))
-                exit()
+                return
             risktype = RiskType(name=name, user=user)
             risktype.save()
             for ith, (name, field_type_name, enum_values) in enumerate(fields):
