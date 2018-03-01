@@ -10,10 +10,15 @@ from main.serializers import RiskTypeSerializer
 from main.serializers import RiskTypeShallowSerializer
 from main.decorators import requires_authentication
 from rest_framework.decorators import api_view  # @UnresolvedImport
+from rest_framework.decorators import authentication_classes  # @UnresolvedImport
+from rest_framework.response import Response  # @UnresolvedImport
+from rest_framework import status  # @UnresolvedImport
+from rest_framework.authentication import BasicAuthentication  # @UnresolvedImport
 
 
-@api_view(["GET"])
 @requires_authentication
+@api_view(["GET", "POST"])
+@authentication_classes((BasicAuthentication,))
 def risktype(request, risktype_id=0):
     ''' 
     This api function is used to get a single risktype
@@ -21,17 +26,30 @@ def risktype(request, risktype_id=0):
     @param risktype_id: the id of the risktype object to be returned
     @return: JSON object 
     '''
-    data = {}
-    result = RiskType.objects.filter(id=risktype_id)
-    if result:
-        risktype = result[0]
-        serializer = RiskTypeSerializer(risktype)
-        data = serializer.data
-    return JsonResponse(data, safe=False)
+    if request.method == 'GET':
+        data = {}
+        result = RiskType.objects.filter(id=risktype_id)
+        if result:
+            risktype = result[0]
+            serializer = RiskTypeSerializer(risktype)
+            data = serializer.data
+        return JsonResponse(data, safe=False)
+    elif request.method == 'POST':
+        from pprint import pprint
+        print();print()
+        print('Request data')
+        pprint(request.data)
+        print();print()
+#         serializer = SnippetSerializer(data=request.data)
+#         if serializer.is_valid():
+#             serializer.save()
+#         return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response({}, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-@api_view(["GET"])
 @requires_authentication
+@api_view(["GET"])
 def risktypes(request):
     ''' 
     This api function is used to get all risktypes associated with the current session user
@@ -42,6 +60,8 @@ def risktypes(request):
     serializer = RiskTypeShallowSerializer(risktypes, many=True)
     data = serializer.data 
     return JsonResponse(data, safe=False)
+
+
 
 
 urls = [path('risktype/<int:risktype_id>/', risktype, name='url_risktype_arg'),

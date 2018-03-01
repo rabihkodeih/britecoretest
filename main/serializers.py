@@ -28,7 +28,7 @@ class FieldSerializer(serializers.ModelSerializer):
     enum_values = EnumValueSerializer(many=True, read_only=True) 
     class Meta:
         model = Field
-        fields = ('id', 'name', 'type', 'order', 'enum_values')
+        fields = ('id', 'name', 'type', 'order', 'value', 'enum_values')
         
 
 class RiskTypeSerializer(serializers.ModelSerializer):

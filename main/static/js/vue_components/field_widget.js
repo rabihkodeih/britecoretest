@@ -7,13 +7,13 @@ Vue.component("field_widget", {
 	    	<!-- *** TEXT ***-->
 	        <div v-if="field.type.name == 'Text'" class="field">
 	            <span class="field_name">{{field.name}}</span>
-	            <input class="form-control" type="text"/>
+	            <input class="form-control" v-bind:name="field.name" type="text" v-model:value="field.value"/>
 	        </div>
 	
 	        <!-- *** NUMBER *** -->
 	        <div v-else-if="field.type.name == 'Number'" class="field">
 	            <span class="field_name">{{field.name}}</span>
-	            <input class="form-control" type="number"/>
+	            <input class="form-control" v-bind:name="field.name" type="number"/>
 	        </div>
 	        
 	        <!-- *** ENUM *** -->
@@ -38,6 +38,7 @@ Vue.component("field_widget", {
     </div>
     `,
     updated: function() {
-    	$('input').val("");
+    	//FIXME: remove this in favor of binding to default values
+    	//$('input').val(""); 
     }
 });
