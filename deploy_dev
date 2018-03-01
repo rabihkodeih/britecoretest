@@ -1,0 +1,8 @@
+mv britecore/local_settings.tmp britecore/local_settings.py
+mv britecore/local_settings.py britecore/local_settings.tmp
+python manage.py collectstatic
+zappa update dev
+python manage.py makemigrations
+python manage.py migrate
+python manage.py test
+mv britecore/local_settings.tmp britecore/local_settings.py
