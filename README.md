@@ -11,10 +11,13 @@ https://f2uddx7bli.execute-api.us-east-2.amazonaws.com/dev/
 ## Db Model
 
 There are four models:
++ **User**
 + **RiskType**
 + **FieldType**
 + **Field**
 + **EnumValue**
+
+The **User** model is the usual django auth user model, it is related to the **RiskType** model through a foreign key relation.
 
 The **RiskType** model represents the type of risk we are interested in such as "Automobile", "Property", etc... It includes a single `name` field.
 
@@ -26,6 +29,18 @@ Finally the **EnumValue** model represents the different enum values that are as
 
 # Frontend
 
-The whole frontend application was implemented in a single relatively small javascript file `app.js`. The reactive framework ***Vue.js*** was the main library used in the backend along with ***jquery3***, ***axios.js*** (promise based ajax calls), ***bootstrap4*** (for styling) and ***gijgo.js*** (used to render the date-picker widget). The modern flavor of ***JavaScript ES6*** has been used in `app.js`.
+The whole frontend application was implemented in a single relatively small javascript file `app.js`. The reactive framework ***Vue.js*** was the main library used in the backend along with ***jquery3***, ***axios.js*** (promise based ajax calls), ***bootstrap4*** (for styling) and ***gijgo.js*** (used to render the date-picker widget). The modern flavor of ***JavaScript ES6*** has been used in `app.js`. The vue component reside in a separate `js\vue_components\` directory.
 
 The main app was implemented using two components: one component to model the different field types and another component to model the date-widget. Note that django reversed url strings where injected in the javascript code instead of hardcoding api urls to allow the project to be deployed by zappa under different guises (*dev*, *staging*, *production*). A fully reactive model was used to render the main project page view. This proved to be very versatile as it greatly simplified the code of the app in comparison to using more traditional event-driven methods. Finaly, a *css* file was used to finetune some styling elements in the main page.
+
+# Tests
+
+A standard django test suite was employed. There are two test cases, one for login sessions and db models, the other for the api section.
+
+# Deployment
+
+After cloning this repository to a local workding directry and setting up a local working copy of the project, run the createtestdata command: `python manage.py createtestdata`. This will create an initial set of data on the local server. Now make sure that the app is working correctly locally.
+
+To deploy, just run the command `bash deploy_dev` found on the root folder (this assumes that you allready have your AWS account settings correctly configured, to make sure edit the file `zappa_settings.js` and update the settings as required). The `deploy_dev` bash script contains all the necessary steps for the deployment including collecting static files and running the tests.
+
+To create test data on the server, simply run the following command: `zappa manage dev createtestdata`. This will create the initial test data as we have done on the local environment. Now everything should be ready, simply navigate to the production url and enjoy!
