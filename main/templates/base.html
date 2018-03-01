@@ -35,7 +35,9 @@
 		</main>
     </div>
     
-    {% if user.is_authenticated %}    
+    {% if user.is_authenticated %}
+        <script type="text/javascript" src="{% static 'js/vue_components/date_widget.js'%}"></script>
+        <script type="text/javascript" src="{% static 'js/vue_components/field_widget.js'%}"></script>
         <script type="text/javascript" src="{% static 'js/app.js'%}"></script>    
     {% endif %}
 </body>

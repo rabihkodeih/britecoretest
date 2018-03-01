@@ -146,10 +146,11 @@ STATIC_URL = local_settings.get('STATIC_URL', "https://%s/" % AWS_S3_CUSTOM_DOMA
 
 STATICFILES_STORAGE = local_settings.get('STATICFILES_STORAGE', 'storages.backends.s3boto.S3BotoStorage')
 
+DEPLOYMENT_STAGE = 'dev'
 
 # Login Specific Settings
 
-#LOGIN_REDIRECT_URL = 'url_home'
+LOGIN_URL = local_settings.get('LOGIN_URL', '/%s/login/' % DEPLOYMENT_STAGE)
 
-LOGOUT_REDIRECT_URL = 'url_home'
+LOGOUT_REDIRECT_URL = 'url_default'
 

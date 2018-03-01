@@ -11,7 +11,7 @@ from main.models import RiskType
 from main.models import FieldType
 from main.models import Field
 from main.models import EnumValue
-from main.management.commands.createtestdata import Command
+from main.management.commands.createtestdata import Command as CreateTestData
 
 
 class APITestCase(TestCase):
@@ -21,10 +21,10 @@ class APITestCase(TestCase):
         configuring various sysem parameters, or session initialization for example.
         '''
         # create test users:
-        User.objects.create_user(username='rabih', email='rabih@britecore.com', password='adminadmin')
+        User.objects.create_user(username='rabih', email='rabih@gmail.com', password='adminadmin')
         User.objects.create_user(username='phil', email='phil@britecore.com', password='adminadmin')
         # setup the test database using the createtestdata command
-        Command().handle()
+        CreateTestData().handle()
         # logout from all accounts
         c = Client()
         c.logout()

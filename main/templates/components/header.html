@@ -7,9 +7,9 @@
             {% if not hide_account %}
 	            {% if user.is_authenticated %}
 	                <p class="header_account">Hi {%if user.first_name%}{{user.first_name}}{%else%}{{user.username}}{%endif%},
-	                <a href="{% url 'logout' %}">logout</a></p>
+	                <a href="{% url 'url_logout' %}">logout</a></p>
 	            {% else %}
-	                <p class="header_account"><a href="{% url 'login' %}">login</a></p>
+	                <p class="header_account"><a href="{% url 'url_login' %}">login</a></p>
 	            {% endif %}
 	        {% endif %}
         </div>

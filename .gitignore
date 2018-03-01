@@ -88,3 +88,10 @@ scratchpad.py
 
 .env
 db.sqlite3
+
+
+### Node.js ###
+node_modules/
+package-lock.json
+
+

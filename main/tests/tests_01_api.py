@@ -8,8 +8,9 @@ import re
 from django.test import TestCase
 from django.contrib.auth.models import User
 from django.test import Client
+from django.urls import reverse
 from main.models import RiskType
-from main.management.commands.createtestdata import Command
+from main.management.commands.createtestdata import Command as CreateTestData
 
 
 def normalize_ids(text):
@@ -31,7 +32,7 @@ class APITestCase(TestCase):
         User.objects.create_user(username='rabih', email='rabih@britecore.com', password='adminadmin')
         User.objects.create_user(username='phil', email='phil@britecore.com', password='adminadmin')
         # setup the test database using the createtestdata command
-        Command().handle()
+        CreateTestData().handle()
         # logout from all accounts
         c = Client()
         c.logout()
@@ -44,7 +45,7 @@ class APITestCase(TestCase):
         risktype_ids = [r.id for r in RiskType.objects.all()]
         c = Client()
         for risktype_id in risktype_ids:
-            response = c.get('/api/risktype/%s' % risktype_id, follow=True)
+            response = c.get('%s%s' % (reverse('url_risktype'), risktype_id), follow=True)
             self.assertEqual(response.status_code, 403)
             
 
@@ -56,7 +57,7 @@ class APITestCase(TestCase):
         nonexisting_risktype_id = max(risktype_ids) + 1
         c = Client()
         c.login(username='phil', password='adminadmin')
-        response = c.get('/api/risktype/%s' % nonexisting_risktype_id, follow=True)
+        response = c.get('%s%s' % (reverse('url_risktype'), nonexisting_risktype_id), follow=True)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.content, b'{}')
         
@@ -68,7 +69,7 @@ class APITestCase(TestCase):
         risktype_id = RiskType.objects.get(name='Automobile').id
         c = Client()
         c.login(username='phil', password='adminadmin')
-        response = c.get('/api/risktype/%s' % risktype_id, follow=True)
+        response = c.get('%s%s' % (reverse('url_risktype'), risktype_id), follow=True)
         nominal_response_content = b'''{"id": 8, "name": "Automobile", "fields": [{"id": 36, "name": "Brand", "type": {"id": 8, "name": "Text", "regex_validator": ".*", "nullable": true}, "order": 1, "enum_values": []}, {"id": 37, "name": "Automobile Type", "type": {"id": 5, "name": "Enum", "regex_validator": ".+", "nullable": false}, "order": 2, "enum_values": [{"value": "Car"}, {"value": "Truck"}, {"value": "Minivan"}, {"value": "Motorbike"}]}, {"id": 38, "name": "Customer Name", "type": {"id": 8, "name": "Text", "regex_validator": ".*", "nullable": true}, "order": 3, "enum_values": []}, {"id": 39, "name": "Coverage Limit", "type": {"id": 7, "name": "Number", "regex_validator": "[-.0-9]+", "nullable": false}, "order": 4, "enum_values": []}, {"id": 40, "name": "Expiry Date", "type": {"id": 6, "name": "Date", "regex_validator": "\\\\d{4}-\\\\d{2}-\\\\d{2}", "nullable": false}, "order": 5, "enum_values": []}]}'''
         self.assertEqual(response.status_code, 200)
         # ids may change so we normalize them here in the test strings
@@ -82,7 +83,7 @@ class APITestCase(TestCase):
         This test makes sure that unauthentcated calls to endpoint receive an HTTP 403 FORBIDDEN response.
         '''
         c = Client()
-        response = c.get('/api/risktypes/', follow=True)
+        response = c.get(reverse('url_risktypes'), follow=True)
         self.assertEqual(response.status_code, 403)
 
 
@@ -92,7 +93,7 @@ class APITestCase(TestCase):
         '''
         c = Client()
         c.login(username='phil', password='adminadmin')
-        response = c.get('/api/risktypes/', follow=True)
+        response = c.get(reverse('url_risktypes'), follow=True)
         nominal_response_content = b'''[{"id": 16, "name": "Automobile"}, {"id": 15, "name": "Property"}]'''
         self.assertEqual(response.status_code, 200)
         # ids may change so we normalize them here in the test strings
