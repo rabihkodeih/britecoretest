@@ -17,6 +17,9 @@ There are four models:
 + **Field**
 + **EnumValue**
 
+This is an ER diagram for the models:
+![ER DIAGRAM IMAGE](https://github.com/rabihkodeih/britecoretest/blob/master/britecore_test_project_models.png)
+
 The **User** model is the usual django auth user model, it is related to the **RiskType** model through a foreign key relation.
 
 The **RiskType** model represents the type of risk we are interested in such as "Automobile", "Property", etc... It includes a single `name` field.
