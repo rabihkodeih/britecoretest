@@ -25,7 +25,10 @@ class FieldTypeSerializer(serializers.ModelSerializer):
 
 class FieldSerializer(serializers.ModelSerializer):
     type = FieldTypeSerializer(read_only=True)
-    enum_values = EnumValueSerializer(many=True, read_only=True) 
+    enum_values = EnumValueSerializer(many=True, read_only=True)
+    value = serializers.SerializerMethodField()
+    def get_value(self, obj):
+        return "" 
     class Meta:
         model = Field
         fields = ('id', 'name', 'type', 'order', 'value', 'enum_values')

@@ -13,13 +13,8 @@ const app = new Vue({
             });
         },
     	on_save_form: (risktype_id) => {
-    		console.log(risktype_id);
-    		console.log(app.risktype);
-    		console.log(global.url_risktype)
-    		//app.risktype = null;
-    		//let post_data = {first:'Rabih', last:'Kodeih'};
     		let post_data = app.risktype;
-    		axios.post(global.url_risktype, post_data)
+    		axios.post(global.url_riskinstance, post_data)
     		.then(response => {
     			console.log(response); //TODO: make error check using response object
     		})

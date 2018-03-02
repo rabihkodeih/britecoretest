@@ -18,7 +18,6 @@ from rest_framework.authentication import BasicAuthentication  # @UnresolvedImpo
 
 @requires_authentication
 @api_view(["GET", "POST"])
-@authentication_classes((BasicAuthentication,))
 def risktype(request, risktype_id=0):
     ''' 
     This api function is used to get a single risktype
@@ -34,18 +33,23 @@ def risktype(request, risktype_id=0):
             serializer = RiskTypeSerializer(risktype)
             data = serializer.data
         return JsonResponse(data, safe=False)
-    elif request.method == 'POST':
-        from pprint import pprint
-        print();print()
-        print('Request data')
-        pprint(request.data)
-        print();print()
-#         serializer = SnippetSerializer(data=request.data)
-#         if serializer.is_valid():
-#             serializer.save()
-#         return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response({}, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@requires_authentication
+@api_view(["POST"])    
+@authentication_classes((BasicAuthentication,))
+def riskinstance(request):
+    from pprint import pprint
+    print();print()
+    print('Request data')
+    pprint(request.data)
+    print();print()
+#     serializer = SnippetSerializer(data=request.data)
+#     if serializer.is_valid():
+#         serializer.save()
+#     return Response(serializer.data, status=status.HTTP_201_CREATED)
+    return Response({}, status=status.HTTP_201_CREATED)
+    #return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 @requires_authentication
@@ -66,4 +70,5 @@ def risktypes(request):
 
 urls = [path('risktype/<int:risktype_id>/', risktype, name='url_risktype_arg'),
         path('risktype/', risktype, name='url_risktype'),
+        path('riskinstance/', riskinstance, name='url_riskinstance'),
         path('risktypes/', risktypes, name='url_risktypes')]

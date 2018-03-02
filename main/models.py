@@ -33,7 +33,6 @@ class Field(models.Model):
     type = models.ForeignKey(FieldType, on_delete=models.CASCADE)
     risk_type = models.ForeignKey(RiskType, related_name='fields', on_delete=models.CASCADE)
     order = models.IntegerField(default=0)
-    value = models.CharField(max_length=1024, default="default_val") #FIXME:
 
     class Meta:
         ordering = ['order']
