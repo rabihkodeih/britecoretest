@@ -19,6 +19,14 @@ class RiskType(models.Model):
         return self.name
 
 
+class RiskInstance(models.Model):
+    title = models.CharField(max_length=256, unique=True)
+    type = models.ForeignKey(RiskType, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.title
+
+
 class FieldType(models.Model):
     name = models.CharField(max_length=16)
     regex_validator = models.CharField(max_length=256)
@@ -39,6 +47,15 @@ class Field(models.Model):
     
     def __str__(self):
         return '%s: %s' % (self.risk_type.name, self.name)
+
+
+class FieldValue(models.Model):
+    holder = models.TextField()
+    field = models.ForeignKey(Field, on_delete=models.CASCADE)
+    riskinstance = models.ForeignKey(RiskInstance, on_delete=models.CASCADE)
+    
+    def __str__(self):
+        return '(%s, %s) : %s' % (str(self.riskinstance), str(self.field), self.holder)
     
 
 class EnumValue(models.Model):

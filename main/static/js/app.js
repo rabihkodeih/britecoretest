@@ -18,9 +18,9 @@ const app = new Vue({
     		.then(response => {
     			console.log(response); //TODO: make error check using response object
     		})
-    		.catch(error => {
-    			console.log(error); //TODO: handle errors gracefully
-    		})
+//    		.catch(error => {
+//    			console.log(error); //TODO: handle errors gracefully
+//    		})
     	},
     	on_cancel_form: () => {
     		app.risktype = null;

@@ -9,11 +9,11 @@ from main.models import RiskType
 from main.serializers import RiskTypeSerializer
 from main.serializers import RiskTypeShallowSerializer
 from main.decorators import requires_authentication
-from rest_framework.decorators import api_view  # @UnresolvedImport
-from rest_framework.decorators import authentication_classes  # @UnresolvedImport
-from rest_framework.response import Response  # @UnresolvedImport
-from rest_framework import status  # @UnresolvedImport
-from rest_framework.authentication import BasicAuthentication  # @UnresolvedImport
+from rest_framework.decorators import api_view
+from rest_framework.decorators import authentication_classes
+from rest_framework.response import Response
+from rest_framework import status
+from rest_framework.authentication import BasicAuthentication
 
 
 @requires_authentication
@@ -64,8 +64,6 @@ def risktypes(request):
     serializer = RiskTypeShallowSerializer(risktypes, many=True)
     data = serializer.data 
     return JsonResponse(data, safe=False)
-
-
 
 
 urls = [path('risktype/<int:risktype_id>/', risktype, name='url_risktype_arg'),
