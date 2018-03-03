@@ -28,8 +28,12 @@
 	                <h2>Risk Form of type: [[riskinstance.type.name]]</h2>
 	                <div class="field">
 		                <span class="field_title">Title</span>
-		                <input class="form-control" v-bind:name="riskinstance.title" 
-		                       type="text" v-model:value="riskinstance.title"/>
+                        <span class="required">*</span>
+                        <div v-bind:class="'field_holder' + (errors.includes(0)?' invalid_field':'')">    
+		                  <input class="form-control" v-bind:name="riskinstance.title" 
+		                         type="text" v-model:value="riskinstance.title"/>
+                        </div>
+                        <span v-if="errors.includes(0)" class="error">Title is required</span>
                     </div>
                     <hr>
 	                <form id='policy_form'>

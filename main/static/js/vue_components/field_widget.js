@@ -8,7 +8,7 @@ Vue.component("field_widget", {
 	        <div class="field">
 	            <span class="field_name">{{col.field.name}}</span>
 	            <span v-bind:class="'required' + (col.field.required?'':' hidden')">*</span>
-            	<div v-bind:class="'date_holder' + (errors.includes(col.field.id)?' invalid_field':'')">
+            	<div v-bind:class="'field_holder' + (errors.includes(col.field.id)?' invalid_field':'')">
 
 
 			    	<!-- ************** 

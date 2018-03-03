@@ -95,6 +95,17 @@ ul.errorlist li {
 	text-align: left;
 }
 
+.field_holder {
+    border: 1px solid rgb(240, 240, 245);
+    display:inline-block;
+    vertical-align:middle;
+    width: 100%;
+    max-width: 270px;
+    /* width: 272px; */
+    /* margin-left: -1px; */
+    border-radius: 4px;
+}
+
 .field {
     padding: 2px;
 	margin-bottom: 5px;
@@ -172,6 +183,7 @@ span.required.hidden {
 
 span.error {
 	vertical-align: top;
+	line-height: 31px;
 	color: red;
 	font-size: 90%;
 	margin-left: 10px;
@@ -193,18 +205,8 @@ span.error {
 	margin-right: 10px;
 }
 
-/***** Gijgo Date Picker Widget *****/
 
-.date_holder {
-	border: 1px solid rgb(240, 240, 245);
-    display:inline-block;
-    vertical-align:middle;
-    width: 100%;
-    max-width: 270px;
-    /* width: 272px; */
-    /* margin-left: -1px; */
-    border-radius: 4px;
-}
+/***** Gijgo Date Picker Widget *****/
 
 .gj-datepicker-md {
     display: inline-block !important;

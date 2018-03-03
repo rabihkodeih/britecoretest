@@ -50,31 +50,27 @@ const app = new Vue({
     		app.riskinstance = null;
     	},
         validate_form: (riskinstance) => {
-        	//TODO: validate title
         	app.errors = [];
-        	
-        	//TODO: validate required (empty values)
+        	if ($.trim(String(riskinstance.title)) == "") {
+        		app.errors.push(0);
+        	}
         	for (let col of riskinstance.columns) {
+        		let required = col.field.required;
         		let type = col.field.type.name;
         		let validator = new RegExp(col.field.type.regex_validator);
-        		let required = col.field.required;
         		let value = col.value; 
         		if (type == 'Enum') {
         			value = value.value
         			if (!value) value = "";
         		};
-        		
-        		console.log(value);
-        		console.log('-----------');
-        		
         		if (String(value).match(validator) === null) {
         			app.errors.push(col.field.id);
         		}
+        		if (required && $.trim(String(value)) == "") {
+        			app.errors.push(col.field.id);
+        		}
         	}
-        	
-        	console.log(app.errors);
-        	
-        	return true;
+        	return (app.error.length == 0);
         },
     },
     mounted: () => {
