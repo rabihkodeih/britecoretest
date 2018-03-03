@@ -16,7 +16,8 @@ class FieldTypeAdmin(admin.ModelAdmin):
 
 
 class FieldAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'type', 'risk_type', 'order')
+    list_editable = ('required',)
+    list_display = ('id', 'name', 'type', 'risk_type', 'required', 'order')
 
 
 class EnumValueAdmin(admin.ModelAdmin):

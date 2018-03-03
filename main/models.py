@@ -40,6 +40,7 @@ class Field(models.Model):
     name = models.CharField(max_length=128)
     type = models.ForeignKey(FieldType, on_delete=models.CASCADE)
     risk_type = models.ForeignKey(RiskType, related_name='fields', on_delete=models.CASCADE)
+    required = models.BooleanField(default=False)
     order = models.IntegerField(default=0)
 
     class Meta:

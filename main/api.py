@@ -8,8 +8,8 @@ from django.urls.conf import path
 from main.models import RiskType 
 from main.models import FieldValue
 from main.models import RiskInstance
-from main.serializers import RiskTypeSerializer, FieldSerializer,\
-    FieldValueSerializer
+from main.serializers import RiskTypeSerializer
+from main.serializers import FieldValueSerializer
 from main.serializers import RiskInstanceSerializer
 from main.serializers import RiskInstanceShallowSerializer
 from main.decorators import requires_authentication

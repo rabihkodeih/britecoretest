@@ -3,6 +3,9 @@ body {
     font-size: 100%;        
 }  
 
+
+/***** Layout *****/
+
 .row {
     padding: 20px;
     margin-bottom: -20px;
@@ -22,6 +25,23 @@ body {
 .right-dash {
     margin-left: 10px;
 }
+
+
+/***** Riskinstances List *****/
+
+.ri_list {
+	border-radius: 7px;
+	padding: 5px;
+	max-height: 300px;
+	overflow: scroll;
+}
+
+.list-group {
+	margin-bottom: 5px;
+}
+
+
+/***** Login Form *****/
 
 .login {
 	width: 50%;
@@ -48,6 +68,9 @@ ul.errorlist li {
 	color: rgb(255,0,0);
 }
 
+
+/***** Header Component *****/
+
 .header_right {
 	float:right;
 }
@@ -59,6 +82,9 @@ ul.errorlist li {
 .header_account {
 	margin-top: 15px;
 }
+
+
+/***** Risk Instance Form *****/
 
 .btn_container {
     margin-bottom:  10px;	
@@ -94,8 +120,19 @@ ul.errorlist li {
 	padding-left: 5px;
 }
 
-.field_name {
+.field_title {
     display: inline-block;
+    text-align: right;
+    width: 150px;
+    font-size:95%;
+    /* font-weight: bold; */
+    margin-right: 5px;
+}
+
+.field_name {
+	display: inline-block;
+	vertical-align: top;
+	line-height: 31px;
     text-align: right;
     width: 150px;
     font-size:80%;
@@ -107,18 +144,66 @@ ul.errorlist li {
 	vertical-align: top;
 }
 
-.field_enum {
+div.field_enum {
+	border: 1px solid rgb(240, 240, 245);
 	display: inline-block;
     font-size:95%;
+    border-radius: 4px;
+    padding: 2px;
 }
 
-/* Settings for Gijgo Date Picker Widget */
+span.required {
+	vertical-align: top;
+	line-height: 31px;
+	width: 4px;
+	margin: 0;
+	color: grey;
+	margin-left:-7px;
+    margin-right: -4px
+}
+
+span.required.hidden {
+	visibility: hidden;
+}
+
+.invalid_field {
+	border: 1px solid rgb(255, 50, 50) !important;
+}
+
+span.error {
+	vertical-align: top;
+	color: red;
+	font-size: 90%;
+	margin-left: 10px;
+}
+
+
+.btn_panel {
+	width: 100%;
+	text-align: center;
+}
+
+.btn_panel div {
+    display: inline-block;
+}
+
+.btn_panel button {
+	width: 100px;
+	margin-left: 10px;
+	margin-right: 10px;
+}
+
+/***** Gijgo Date Picker Widget *****/
 
 .date_holder {
+	border: 1px solid rgb(240, 240, 245);
     display:inline-block;
     vertical-align:middle;
     width: 100%;
     max-width: 270px;
+    /* width: 272px; */
+    /* margin-left: -1px; */
+    border-radius: 4px;
 }
 
 .gj-datepicker-md {
