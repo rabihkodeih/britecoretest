@@ -20,9 +20,10 @@
 <body>
     <script type="text/javascript">
         const global = {
-            url_riskinstance: "{% url 'url_riskinstance' %}",
-            url_risktype: "{% url 'url_risktype' %}",
             url_risktypes: "{% url 'url_risktypes' %}",
+            url_riskinstance_new: "{% url 'url_riskinstance_new' %}",
+            url_riskinstance: "{% url 'url_riskinstance' %}",
+            url_riskinstances: "{% url 'url_riskinstances' %}"
         }
     </script>    
     
@@ -31,8 +32,8 @@
         {% block header %}{% include "components/header.html" %}{% endblock %}
         
 		<main>
-		       {% block content %}
-		       {% endblock %}
+		    {% block content %}
+		    {% endblock %}
 		</main>
     </div>
     

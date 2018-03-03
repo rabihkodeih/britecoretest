@@ -28,7 +28,7 @@ class RiskInstanceAdmin(admin.ModelAdmin):
 
 
 class FieldValueAdmin(admin.ModelAdmin):
-    list_display = ('id', 'riskinstance', 'field', 'holder')
+    list_display = ('id', 'riskinstance', 'field', 'value')
 
 
 admin.site.register(RiskType, RiskTypeAdmin)

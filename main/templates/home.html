@@ -4,24 +4,35 @@
 
 	    <div id="app">
 	        <div class="row">
-	            <div class="col">
+	            <div class="col left-dash">
 	                <p> Create a new <b>Policy</b> Form from one of the following <b>Risk Types</b>: </p>
 	                <ul>
-	                   <li v-for="rt in risktypes" class="btn_container">
-	                       <button class="btn btn-primary" v-on:click="on_click_risktype(rt.id)"> [[ rt.name ]] </button>
+	                   <li v-for="rt in risktypes" class="btn_container"
+	                       onclick="$('.ri-link').removeClass('active')">
+	                       <button class="btn btn-primary" v-on:click="on_click_risktype(rt.id)"> [[rt.name]] </button>
 	                   </li>
 	                </ul>
 	            </div>
+	            <div class="col right-dash">
+	               <p> Or select one of the following <b>policies</b>: </p>
+						<div v-for="ri in riskinstances" class="list-group">
+							<a href="#" class="list-group-item list-group-item-action ri-link"
+							   v-on:click="on_click_riskinstance(ri.id)"
+							   onclick="$('.ri-link').removeClass('active');$(this).addClass('active')"> [[ri.title]]</a>
+						</div>
+	            </div>
 	        </div>
-	        <div class="row" v-if="risktype">
+	        <div class="row" v-if="riskinstance">
 	            <div class="col">
-	                <h2>Policy of risk type: [[risktype.name]]</h2>
+	                <h2>Policy of risk type: [[riskinstance.type.name]]</h2>
 	                
-	                <form id='policy_form' method="post">
-	                    <field_widget v-bind:fields="risktype.fields"></field_widget>
+	                <!-- TODO: add a top label row dipicting the riskinstance title -->
+	                <form id='policy_form'>
+	                    <field_widget v-bind:columns="riskinstance.columns"></field_widget>
 	                </form>	                
-                    <button class="btn btn-info" v-on:click="on_save_form(risktype.id)"> Save </button>
-                    <button class="btn btn-info" v-on:click="on_cancel_form()"> Cancel </button>
+                    <button class="btn btn-info" v-on:click="on_save_policy(riskinstance)"> Save </button>
+                    <button class="btn btn-info" v-on:click="on_cancel_policy()"
+                            onclick="$('.ri-link').removeClass('active')"> Cancel </button>
 	                
 	            </div>
 	        </div>

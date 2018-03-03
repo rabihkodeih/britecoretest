@@ -15,6 +15,14 @@ body {
 	padding: 10px;
 }
 
+.left-dash {
+    margin-right: 10px;
+}
+
+.right-dash {
+    margin-left: 10px;
+}
+
 .login {
 	width: 50%;
 	margin: 0 auto;
@@ -83,6 +91,7 @@ ul.errorlist li {
 .field .form-control {
 	display: inline-block;
 	padding: 2px;
+	padding-left: 5px;
 }
 
 .field_name {

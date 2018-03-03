@@ -3,17 +3,14 @@ Vue.component("date_widget", {
 	props: ['value'],
 	mounted: function() {
 		let self = this;
-		//$(this.$el).datepicker({ minDate: startDate, value: startDate }).trigger('change')
-		//TODO: replace by the above line and send {value: startDate} to datepicker widget
-		//ref: http://gijgo.com/datepicker/example/vue-js
-		$(this.$el).datepicker()
+		$(this.$el).datepicker({value:this.value}).trigger('change')
 		.on('change', function() {
 			self.$emit('input', this.value);
 		})
 	},
 	watch: {
 		value: function (value) {
-            $(this.$el).val(value);
+			$(this.$el).val(value);
         }
 	},
 	beforeDestroy: function() {

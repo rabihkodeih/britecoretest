@@ -46,16 +46,19 @@ class Field(models.Model):
         ordering = ['order']
     
     def __str__(self):
-        return '%s: %s' % (self.risk_type.name, self.name)
+        return '(%s) %s: %s' % (self.type.name, self.risk_type.name, self.name)
 
 
 class FieldValue(models.Model):
-    holder = models.TextField()
+    value = models.TextField()
     field = models.ForeignKey(Field, on_delete=models.CASCADE)
-    riskinstance = models.ForeignKey(RiskInstance, on_delete=models.CASCADE)
+    riskinstance = models.ForeignKey(RiskInstance, related_name="columns", on_delete=models.CASCADE)
+    
+    class Meta:
+        ordering = ['field__order']
     
     def __str__(self):
-        return '(%s, %s) : %s' % (str(self.riskinstance), str(self.field), self.holder)
+        return '(%s, %s) : %s' % (str(self.riskinstance), str(self.field), self.value)
     
 
 class EnumValue(models.Model):
