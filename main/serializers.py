@@ -28,8 +28,8 @@ class FieldTypeSerializer(serializers.ModelSerializer):
 
 
 class FieldSerializer(serializers.ModelSerializer):
-    type = FieldTypeSerializer(read_only=True)
-    enum_values = EnumValueSerializer(many=True, read_only=True)
+    type = FieldTypeSerializer(read_only=False)
+    enum_values = EnumValueSerializer(many=True, read_only=False)
     class Meta:
         model = Field
         fields = ('id', 'name', 'type', 'required', 'order', 'enum_values')
@@ -42,7 +42,7 @@ class RiskTypeSerializer(serializers.ModelSerializer):
 
 
 class FieldValueSerializer(serializers.ModelSerializer):
-    field = FieldSerializer(read_only=True)
+    field = FieldSerializer(read_only=False)
     value = serializers.SerializerMethodField()
     def get_value(self, obj):
         # here we should always return a json object if the value was saved as one
@@ -57,8 +57,8 @@ class FieldValueSerializer(serializers.ModelSerializer):
 
 
 class RiskInstanceSerializer(serializers.ModelSerializer):
-    columns = FieldValueSerializer(many=True, read_only=True)
-    type = RiskTypeSerializer(read_only=True)
+    columns = FieldValueSerializer(many=True, read_only=False)
+    type = RiskTypeSerializer(read_only=False)
     class Meta:
         model = RiskInstance
         fields = ('id', 'title', 'type', 'columns')

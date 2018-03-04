@@ -18,7 +18,11 @@ from rest_framework.decorators import authentication_classes
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.authentication import BasicAuthentication
-from main.utils import save_new_riskinstance
+from main.utils import save_riskinstance 
+from main.utils import validate_riskinstance
+from django.db import transaction
+from django.db import IntegrityError
+from django.db import DatabaseError
 
 
 @requires_authentication
@@ -39,35 +43,33 @@ def riskinstance_new(request, risktype_id=0):
 
 
 @requires_authentication
-@api_view(["GET"])
-def riskinstance(request, riskinstance_id):
+@api_view(["GET", "POST"])
+@authentication_classes((BasicAuthentication,))
+def riskinstance(request, riskinstance_id=0):
     #TODO: insert doc string
-    data = {}
-    result = RiskInstance.objects.filter(id=riskinstance_id)
-    if result:
-        riskinstance = result[0]
-        serializer = RiskInstanceSerializer(riskinstance)
-        data = serializer.data
-    return JsonResponse(data, safe=False)
+    if request.method == "GET":
+        data = {}
+        result = RiskInstance.objects.filter(id=riskinstance_id)
+        if result:
+            riskinstance = result[0]
+            serializer = RiskInstanceSerializer(riskinstance)
+            data = serializer.data
+        return JsonResponse(data, safe=False)
+    elif request.method == "POST":
+        response = Response({}, status=status.HTTP_201_CREATED)
+        if not validate_riskinstance(request.data):
+            response = Response({'message': 'Could not validate form data'}, status=status.HTTP_406_NOT_ACCEPTABLE)
+        else:
+            try:
+                with transaction.atomic(): 
+                    save_riskinstance(request.data)
+            except IntegrityError as er:
+                response = Response({'message': er.message}, status=status.HTTP_406_NOT_ACCEPTABLE)
+            except Exception:
+                response = Response({}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        return response
+    return Response({}, status=status.HTTP_400_BAD_REQUEST)
     
-
-#TODO: imbed this save function with the above one
-# @requires_authentication
-# @api_view(["POST"])    
-# @authentication_classes((BasicAuthentication,))
-# def riskinstance(request):
-#     #FIXME: add cocumentation
-#     from pprint import pprint
-#     pprint(request.data)
-#     #FIXME: complete implementation
-#     #save_new_riskinstance(request.data)
-# #     serializer = SnippetSerializer(data=request.data)
-# #     if serializer.is_valid():
-# #         serializer.save()
-# #     return Response(serializer.data, status=status.HTTP_201_CREATED)
-#     return Response({}, status=status.HTTP_201_CREATED)
-#     #return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
 
 @requires_authentication
 @api_view(["GET"])

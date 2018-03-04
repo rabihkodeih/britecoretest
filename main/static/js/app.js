@@ -23,27 +23,27 @@ const app = new Vue({
     	},
         on_click_risktype: (risktype_id) => {
         	app.riskinstance = null;
-        	axios.get(global.url_riskinstance_new + risktype_id + "/").then(response => {
+        	axios.get(global.url_riskinstance_new + risktype_id + "/").then((response) => {
                 app.riskinstance = response.data;
             });
         },
         on_click_riskinstance: (riskinstance_id) => {
         	app.riskinstance = null;
-        	axios.get(global.url_riskinstance + riskinstance_id + "/").then(response => {
+        	axios.get(global.url_riskinstance + riskinstance_id + "/").then((response) => {
         		$('#ri-' + riskinstance_id).addClass('active');
 	            app.riskinstance = response.data;
         	});
         },
     	on_save: (riskinstance) => {
-    		//TODO: add form validation here
-    		if (!app.validate_form(riskinstance)) {
-    			console.log('you have validation errors');
-    		} else {
-//        		let post_data = app.risktype;
-//        		axios.post(global.url_riskinstance, post_data)
-//        		.then(response => {
-//        			console.log(response); //TODO: dispaly a popup saying "Policy Saved"
-//        		})
+    		if (app.validate_form(riskinstance)) {
+        		let post_data = app.riskinstance;
+        		axios.post(global.url_riskinstance, post_data)
+        		.then((response) => {
+        			console.log(response); 
+        			//TODO: dispaly a popup saying "Policy Saved"
+        			app.init_page();
+        			app.riskinstance = null;
+        		})
     		}
     	},
     	on_cancel: () => {
@@ -60,24 +60,21 @@ const app = new Vue({
         		let validator = new RegExp(col.field.type.regex_validator);
         		let value = col.value; 
         		if (type == 'Enum') {
-        			value = value.value
+        			value = value.value;
         			if (!value) value = "";
         		};
-        		if (String(value).match(validator) === null) {
-        			app.errors.push(col.field.id);
-        		}
-        		if (required && $.trim(String(value)) == "") {
+        		if ((String(value).match(validator) === null) || (required && $.trim(String(value)) == "")) {
         			app.errors.push(col.field.id);
         		}
         	}
-        	return (app.error.length == 0);
+        	return (app.errors.length == 0);
         },
     },
     mounted: () => {
-    	axios.get(global.url_risktypes).then(response => {
+    	axios.get(global.url_risktypes).then((response) => {
             app.risktypes = response.data;
         });
-    	axios.get(global.url_riskinstances).then(response => {
+    	axios.get(global.url_riskinstances).then((response) => {
     		app.riskinstances = response.data;
     	})
     }
