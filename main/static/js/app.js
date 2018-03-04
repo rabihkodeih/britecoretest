@@ -14,7 +14,7 @@ const app = new Vue({
     	}
     },
     methods: {
-    	update_riskinstances: function() {
+    	update_riskinstances: function(continuation) {
         	axios.get(global.url_riskinstances).then((response) => {
         		app.riskinstances = response.data;
         		this.$forceUpdate();
@@ -35,7 +35,6 @@ const app = new Vue({
         on_click_riskinstance: (riskinstance_id) => {
         	app.riskinstance = null;
         	axios.get(global.url_riskinstance + riskinstance_id + "/").then((response) => {
-        		//FIXME: $('#ri-' + riskinstance_id).addClass('active');
 	            app.riskinstance = response.data;
         	});
         },
@@ -44,12 +43,14 @@ const app = new Vue({
         		let post_data = app.riskinstance;
         		axios.post(global.url_riskinstance, post_data)
         		.then((response) => {
+        			console.log(response)
         			app.riskinstance = null;
         			app.update_riskinstances();
-        			//TODO: dispaly a popup saying "Policy Saved"
-        		}
-        		//TODO: add error handling here
-        		)
+        		})
+        		.catch((error) => {
+        			let message = error.response.data.message? error.response.data.message:error.response.statusText;
+        			alert('Could not save for due to the following issue:\n' + message);
+        		})
     		}
     	},
     	on_cancel: () => {

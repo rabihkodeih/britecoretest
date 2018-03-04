@@ -61,10 +61,11 @@ def riskinstance(request, riskinstance_id=0):
             response = Response({'message': 'Could not validate form data'}, status=status.HTTP_406_NOT_ACCEPTABLE)
         else:
             try:
-                with transaction.atomic(): 
+                with transaction.atomic():
                     save_riskinstance(request.data)
             except IntegrityError as er:
-                response = Response({'message': er.message}, status=status.HTTP_406_NOT_ACCEPTABLE)
+                message = 'There is another risk form with the same title.\nPlease chose another title.' 
+                response = Response({'message': message}, status=status.HTTP_406_NOT_ACCEPTABLE)
             except Exception:
                 response = Response({}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         return response
