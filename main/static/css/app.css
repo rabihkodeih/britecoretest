@@ -27,9 +27,9 @@ body {
 }
 
 
-/***** Riskinstances List *****/
+/***** Selection Lists *****/
 
-.ri_list {
+.seletion_list {
 	border-radius: 7px;
 	padding: 5px;
 	max-height: 300px;

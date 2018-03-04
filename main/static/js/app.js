@@ -3,23 +3,28 @@ const app = new Vue({
     delimiters: ["[[", "]]"],
     el: "#app",
     data: {
-    	/* app state */
     	risktypes: [],
         riskinstances: [],
-        
-        /* working state */
         errors: [],
         riskinstance: null
     },
     watch: {
     	riskinstance: (val) => {
-    		if (val === null) app.init_page();
+    		if (val === null) app.errors = [];
     	}
     },
     methods: {
-    	init_page: () => {
-    		app.errors = [];
-    		$('.ri-link').removeClass('active');
+    	update_riskinstances: function() {
+        	axios.get(global.url_riskinstances).then((response) => {
+        		app.riskinstances = response.data;
+        		this.$forceUpdate();
+        	})
+    	},
+    	update_risktypes: function() {
+        	axios.get(global.url_risktypes).then((response) => {
+                app.risktypes = response.data;
+                this.$forceUpdate();
+            });
     	},
         on_click_risktype: (risktype_id) => {
         	app.riskinstance = null;
@@ -30,7 +35,7 @@ const app = new Vue({
         on_click_riskinstance: (riskinstance_id) => {
         	app.riskinstance = null;
         	axios.get(global.url_riskinstance + riskinstance_id + "/").then((response) => {
-        		$('#ri-' + riskinstance_id).addClass('active');
+        		//FIXME: $('#ri-' + riskinstance_id).addClass('active');
 	            app.riskinstance = response.data;
         	});
         },
@@ -39,11 +44,12 @@ const app = new Vue({
         		let post_data = app.riskinstance;
         		axios.post(global.url_riskinstance, post_data)
         		.then((response) => {
-        			console.log(response); 
-        			//TODO: dispaly a popup saying "Policy Saved"
-        			app.init_page();
         			app.riskinstance = null;
-        		})
+        			app.update_riskinstances();
+        			//TODO: dispaly a popup saying "Policy Saved"
+        		}
+        		//TODO: add error handling here
+        		)
     		}
     	},
     	on_cancel: () => {
@@ -69,14 +75,11 @@ const app = new Vue({
         	}
         	return (app.errors.length == 0);
         },
+        
     },
-    mounted: () => {
-    	axios.get(global.url_risktypes).then((response) => {
-            app.risktypes = response.data;
-        });
-    	axios.get(global.url_riskinstances).then((response) => {
-    		app.riskinstances = response.data;
-    	})
+    mounted: function() {
+    	this.update_risktypes();
+    	this.update_riskinstances();
     }
 });
 

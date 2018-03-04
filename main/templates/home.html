@@ -6,19 +6,21 @@
 	        <div class="row">
 	            <div class="col left-dash">
 	                <p> Create a new <b>Risk Form</b> Form from one of the following <b>Risk Types</b>: </p>
-	                <ul>
-	                   <li v-for="rt in risktypes" class="btn_container">
-	                       <button class="btn btn-primary" v-on:click="on_click_risktype(rt.id)"> [[rt.name]] </button>
-	                   </li>
-	                </ul>
+		                <div class="selection_list">   
+			                <ul>
+			                   <li v-for="rt in risktypes" class="btn_container">
+			                       <button class="btn btn-primary" v-on:click="on_click_risktype(rt.id)"> [[rt.name]] </button>
+			                   </li>
+			                </ul>
+		                </div>
 	            </div>
 	            <div class="col right-dash">
 	               <p> Or select one of the following <b>Risk Forms</b>: </p>
-						<div class="ri_list">
+						<div class="selection_list">
 							<div v-for="ri in riskinstances" class="list-group">
 								<a v-bind:id="'ri-' + ri.id" href="#" class="list-group-item list-group-item-action ri-link"
-								   v-on:click="on_click_riskinstance(ri.id)"
-								   onclick="$('.ri-link').removeClass('active');"> [[ri.title]]</a>
+								   v-on:click="on_click_riskinstance(ri.id)"> [[ri.title]] </a>
+							   <!-- onclick="$('.ri-link').removeClass('active');"> [[ri.title]] </a> -->
 							</div>
 						</div>
 	            </div>
