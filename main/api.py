@@ -22,13 +22,16 @@ from main.utils import save_riskinstance
 from main.utils import validate_riskinstance
 from django.db import transaction
 from django.db import IntegrityError
-from django.db import DatabaseError
 
 
 @requires_authentication
 @api_view(["GET"])
 def riskinstance_new(request, risktype_id=0):
-    #TODO: insert doc string
+    ''' 
+    This api function is used to get a JSON object for a new riskinstance.
+    @param risktype_id: the id of the risktype to be used in creating the risk instance
+    @return: a JSON object 
+    '''
     data = {}
     result = RiskType.objects.filter(id=risktype_id)
     if result:
@@ -43,10 +46,17 @@ def riskinstance_new(request, risktype_id=0):
 
 
 @requires_authentication
-@api_view(["GET", "POST"])
+@api_view(["GET", "POST", "DELETE"])
 @authentication_classes((BasicAuthentication,))
 def riskinstance(request, riskinstance_id=0):
-    #TODO: insert doc string
+    '''
+    This api function is used for three purposes:
+        1- To retreive a riskinstance (GET)
+        2- To save a riskinstance (POST)
+        3- To delete a riskinstance (DELETE)
+    @param riskinstance_id: the id of the riskinstance object
+    @return: JSON object in case 1, and HTTP response object in cases 2 and 3 
+    '''
     if request.method == "GET":
         data = {}
         result = RiskInstance.objects.filter(id=riskinstance_id)
@@ -63,11 +73,24 @@ def riskinstance(request, riskinstance_id=0):
             try:
                 with transaction.atomic():
                     save_riskinstance(request.data)
-            except IntegrityError as er:
+            except IntegrityError:
                 message = 'There is another risk form with the same title.\nPlease chose another title.' 
                 response = Response({'message': message}, status=status.HTTP_406_NOT_ACCEPTABLE)
             except Exception:
                 response = Response({}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        return response
+    elif request.method == "DELETE":
+        response = Response({}, status=status.HTTP_200_OK)
+        try:
+            ri_id = request.data['ri_id']
+            result = RiskInstance.objects.filter(id=ri_id)
+            if result:
+                riskinstance = result[0]
+                riskinstance.delete()
+            else:
+                response = Response({}, status=status.HTTP_204_NO_CONTENT)
+        except:
+            response = Response({}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)        
         return response
     return Response({}, status=status.HTTP_400_BAD_REQUEST)
     

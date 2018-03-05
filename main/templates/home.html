@@ -17,11 +17,13 @@
 	            <div class="col right-dash">
 	               <p> Or select one of the following <b>Risk Forms</b>: </p>
 						<div class="selection_list">
-							<div v-for="ri in riskinstances" class="list-group">
-								<a v-bind:class="'list-group-item list-group-item-action ri-link' + ((riskinstance && (ri.id == riskinstance.id))?' active':'')"
-								   v-bind:id="'ri-' + ri.id" href="#" 
-								   v-on:click="on_click_riskinstance(ri.id)"> [[ri.title]] </a>
-							</div>
+							<ul v-for="ri in riskinstances" class="list-group">
+								<li v-bind:class="'list-group-item list-group-item-action' + ((riskinstance && (ri.id == riskinstance.id))?' active':'')"
+								    v-bind:id="'ri-' + ri.id" href="#" 
+								    v-on:click="on_click_riskinstance(ri.id)"> [[ri.title]] 
+								    <span class="badge badge-pill" v-on:click.stop="on_riskinstance_delete(ri.id)">X</span>    
+								</li>
+							</ul>
 						</div>
 	            </div>
 	        </div>

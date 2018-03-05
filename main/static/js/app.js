@@ -17,13 +17,13 @@ const app = new Vue({
     	update_riskinstances: function(continuation) {
         	axios.get(global.url_riskinstances).then((response) => {
         		app.riskinstances = response.data;
-        		this.$forceUpdate();
+        		setTimeout(()=>{this.$forceUpdate();}, 50);
         	})
     	},
     	update_risktypes: function() {
         	axios.get(global.url_risktypes).then((response) => {
                 app.risktypes = response.data;
-                this.$forceUpdate();
+                setTimeout(()=>{this.$forceUpdate();}, 50);
             });
     	},
         on_click_risktype: (risktype_id) => {
@@ -38,18 +38,32 @@ const app = new Vue({
 	            app.riskinstance = response.data;
         	});
         },
-    	on_save: (riskinstance) => {
-    		if (app.validate_form(riskinstance)) {
-        		let post_data = app.riskinstance;
-        		axios.post(global.url_riskinstance, post_data)
+        on_riskinstance_delete: function(riskinstance_id) {
+        	let response = confirm("Delete Risk Instance?");
+        	if (response) {
+        		let delete_data = {ri_id: riskinstance_id};
+        		axios.delete(global.url_riskinstance, {data:delete_data})
         		.then((response) => {
-        			console.log(response)
         			app.riskinstance = null;
         			app.update_riskinstances();
         		})
         		.catch((error) => {
         			let message = error.response.data.message? error.response.data.message:error.response.statusText;
-        			alert('Could not save for due to the following issue:\n' + message);
+        			alert('Could not delete risk instance due to the following issue:\n' + message);
+        		})
+        	}
+        },
+    	on_save: (riskinstance) => {
+    		if (app.validate_form(riskinstance)) {
+        		let post_data = app.riskinstance;
+        		axios.post(global.url_riskinstance, post_data)
+        		.then((response) => {
+        			app.riskinstance = null;
+        			app.update_riskinstances();
+        		})
+        		.catch((error) => {
+        			let message = error.response.data.message? error.response.data.message:error.response.statusText;
+        			alert('Could not save form due to the following issue:\n' + message);
         		})
     		}
     	},
