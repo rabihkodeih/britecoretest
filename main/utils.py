@@ -53,7 +53,18 @@ def validate_riskinstance(data):
                 break
     return result
     
-    
 
+def populate_fields(data, values):
+    '''
+    This is a utility function used to populate fields in data
+    @param data: a dict representing a JSON object
+    @param values: a dict of values keyed by field name
+    @return: None
+    '''
+    for col in data['columns']:
+        value_key = col['field']['name']
+        col['value'] = values[value_key]
+    
+    
         
         

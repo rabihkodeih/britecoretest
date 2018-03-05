@@ -92,6 +92,13 @@ DATABASES = {
 }
 
 
+# Fixtuers
+# https://docs.djangoproject.com/en/2.0/howto/initial-data/#providing-initial-data-with-fixtures
+FIXTURE_DIRS = (
+    os.path.join(BASE_DIR, 'fixtures')
+)
+
+
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
 

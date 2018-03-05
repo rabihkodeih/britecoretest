@@ -8,6 +8,8 @@ from django.test import TestCase
 from django.contrib.auth.models import User
 from django.test import Client
 from main.models import RiskType
+from main.models import RiskInstance
+from main.models import FieldValue
 from main.models import FieldType
 from main.models import Field
 from main.models import EnumValue
@@ -47,6 +49,8 @@ class APITestCase(TestCase):
         self.assertEqual(len(FieldType.objects.all()), 4)
         self.assertEqual(len(Field.objects.all()), 20)
         self.assertEqual(len(EnumValue.objects.all()), 13)
+        self.assertEqual(len(FieldValue.objects.all()), 40)
+        self.assertEqual(len(RiskInstance.objects.all()), 8)
         
 
 
