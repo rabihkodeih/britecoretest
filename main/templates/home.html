@@ -17,6 +17,8 @@
 	            <div class="col right-dash">
 	               <p> Or select one of the following <b>Risk Forms</b>: </p>
 						<div class="selection_list">
+
+                            						
 							<ul v-for="ri in riskinstances" class="list-group">
 								<li v-bind:class="'list-group-item list-group-item-action' + ((riskinstance && (ri.id == riskinstance.id))?' active':'')"
 								    v-bind:id="'ri-' + ri.id" href="#" 
@@ -24,36 +26,42 @@
 								    <span class="badge badge-pill" v-on:click.stop="on_riskinstance_delete(ri.id)">X</span>    
 								</li>
 							</ul>
+                            
+
 							<p v-if="riskinstances.length==0">- no risk forms created yet -</p>      
 						</div>
 	            </div>
 	        </div>
-	        <div class="row" v-if="riskinstance">
-	            <div class="col risk_form">
-	                <h2>Risk Form of type: [[riskinstance.type.name]]</h2>
-	                <div class="field">
-		                <span class="field_title">Title</span>
-                        <span class="required">*</span>
-                        <div v-bind:class="'field_holder' + (errors.includes(0)?' invalid_field':'')">    
-		                  <input class="form-control" v-bind:name="riskinstance.title" 
-		                         type="text" v-model:value="riskinstance.title"/>
-                        </div>
-                        <span v-if="errors.includes(0)" class="error">Title is required</span>
-                    </div>
-                    <hr>
-	                <form id='policy_form'>
-	                    <field_widget v-bind:columns="riskinstance.columns"
-	                                  v-bind:errors="errors"></field_widget>
-	                </form>
-	                <hr>             
-                    <div class="btn_panel">
-	                    <div>
-                            <button class="btn btn-info" v-on:click="on_cancel()"> Cancel </button>
-		                    <button class="btn btn-info" v-on:click="on_save(riskinstance)"> Save </button>
+	        <transition name="fade">
+		        <div class="row" v-if="riskinstance">
+		            <div class="col risk_form">
+		                <h2>Risk Form of type: [[riskinstance.type.name]]</h2>
+		                <div class="field">
+			                <span class="field_title">Title</span>
+	                        <span class="required">*</span>
+	                        <div v-bind:class="'field_holder' + (errors.includes(0)?' invalid_field':'')">    
+			                  <input class="form-control" v-bind:name="riskinstance.title" 
+			                         type="text" v-model:value="riskinstance.title"/>
+	                        </div>
+	                        <transition name="fade">
+	                           <span v-if="errors.includes(0)" class="error">Title is required</span>
+	                        </transition>
+	                    </div>
+	                    <hr>
+		                <form id='policy_form'>
+		                    <field_widget v-bind:columns="riskinstance.columns"
+		                                  v-bind:errors="errors"></field_widget>
+		                </form>
+		                <hr>             
+	                    <div class="btn_panel">
+		                    <div>
+	                            <button class="btn btn-info" v-on:click="on_cancel()"> Cancel </button>
+			                    <button class="btn btn-info" v-on:click="on_save(riskinstance)"> Save </button>
+			                </div>
 		                </div>
-	                </div>
-	            </div>
-	        </div>
+		            </div>
+		        </div>
+	        </transition>
 	    </div>
 	    
 {% endblock %}

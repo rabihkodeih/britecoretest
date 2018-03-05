@@ -245,3 +245,13 @@ span.error {
 	border-radius: .25rem !important;
 	transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out !important	
 }
+
+
+/***** Transition Effects *****/
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .3s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+}
