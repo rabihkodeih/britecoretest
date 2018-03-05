@@ -23,6 +23,9 @@ from main.utils import validate_riskinstance
 from django.db import transaction
 from django.db import IntegrityError
 
+import logging
+logger = logging.getLogger(__name__)
+
 
 @requires_authentication
 @api_view(["GET"])
@@ -77,6 +80,8 @@ def riskinstance(request, riskinstance_id=0):
                 message = 'There is another risk form with the same title.\nPlease chose another title.' 
                 response = Response({'message': message}, status=status.HTTP_406_NOT_ACCEPTABLE)
             except Exception:
+                logger.error(request.data)
+                logging.exception('')
                 response = Response({}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         return response
     elif request.method == "DELETE":
@@ -90,6 +95,8 @@ def riskinstance(request, riskinstance_id=0):
             else:
                 response = Response({}, status=status.HTTP_204_NO_CONTENT)
         except:
+            logger.error(request.data)
+            logging.exception('')
             response = Response({}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)        
         return response
     return Response({}, status=status.HTTP_400_BAD_REQUEST)
