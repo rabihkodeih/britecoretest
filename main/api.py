@@ -5,7 +5,7 @@ Created on Feb 4, 2018
 '''
 from django.http.response import JsonResponse
 from django.urls.conf import path
-from main.models import RiskType 
+from main.models import RiskType
 from main.models import FieldValue
 from main.models import RiskInstance
 from main.serializers import RiskTypeSerializer
@@ -30,10 +30,10 @@ logger = logging.getLogger(__name__)
 @requires_authentication
 @api_view(["GET"])
 def riskinstance_new(request, risktype_id=0):
-    ''' 
+    '''
     This api function is used to get a JSON object for a new riskinstance.
     @param risktype_id: the id of the risktype to be used in creating the risk instance
-    @return: a JSON object 
+    @return: a JSON object
     '''
     data = {}
     result = RiskType.objects.filter(id=risktype_id)

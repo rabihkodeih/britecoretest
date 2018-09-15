@@ -175,10 +175,10 @@ class APITestCase(TestCase):
         data = json.loads(response.content)
         data['title'] = 'Test'
         populate_fields(data, {'Address': 'address text',
-                                'ZipCode': 'zipcode text',
-                                'Property Type': {'value': 'Government Building'},
-                                'Coverage B Limit': '1223344',
-                                'Date of Renewal': '03/09/2018'})
+                               'ZipCode': 'zipcode text',
+                               'Property Type': {'value': 'Government Building'},
+                               'Coverage B Limit': '1223344',
+                               'Date of Renewal': '03/09/2018'})
         post_data = json.dumps(data)
         response = c.post(reverse('url_riskinstance'), data=post_data, follow=True, content_type='application/json')
         self.assertEqual(response.status_code, 201)
@@ -202,10 +202,10 @@ class APITestCase(TestCase):
         data = json.loads(response.content)
         data['title'] = 'Property_10s'
         populate_fields(data, {'Address': 'Central District Area Bock 5 str 23',
-                                'ZipCode': '88244',
-                                'Property Type': {'value': 'Church'},
-                                'Coverage B Limit': '100300',
-                                'Date of Renewal': '03/09/2019'})
+                               'ZipCode': '88244',
+                               'Property Type': {'value': 'Church'},
+                               'Coverage B Limit': '100300',
+                               'Date of Renewal': '03/09/2019'})
         post_data = json.dumps(data)
         response = c.post(reverse('url_riskinstance'), data=post_data, follow=True, content_type='application/json')
         self.assertEqual(response.status_code, 201)
