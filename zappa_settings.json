@@ -14,7 +14,6 @@
         "aws_environment_variables": {
             "BC_SECRET_KEY": "yf*e^dqt2b4^lnf8$1kqotk&2w!-ab!nc83jl$++g-ztn8xd^+",
             "BC_DEBUG": 0,
-            "BC_DB_ENGINE": "django.db.backends.postgresql",
             "BC_DB_NAME": "britecoretest",
             "BC_DB_USER": "britecoretestadmin7bli",
             "BC_DB_PASSWORD": "fhuryg^&^%3et64%&&*derrf2390",

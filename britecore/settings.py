@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 
 import os
 
+env = dict(os.environ)
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -20,12 +22,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-# TODO: fix
-SECRET_KEY = 'yf*e^dqt2b4^lnf8$1kqotk&2w!-ab!nc83jl$++g-ztn8xd^+'
+SECRET_KEY = env['BC_SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# TODO: fix
-DEBUG = True
+DEBUG = env['BC_DEBUG']
 
 ALLOWED_HOSTS = ["127.0.0.1", "localhost", "f2uddx7bli.execute-api.us-east-2.amazonaws.com"]
 
@@ -78,23 +78,14 @@ WSGI_APPLICATION = 'britecore.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
-# TODO: fix
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'britecoretest',
-#         'USER': 'britecoretestadmin7bli',
-#         'PASSWORD': 'fhuryg^&^%3et64%&&*derrf2390',
-#         'HOST': 'rds-postgresql-7bli.cth7mcrqx10m.us-east-2.rds.amazonaws.com',
-#         'PORT': '5432',
-#     },
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'britecore',
-        'USER': 'postgres',
-        'PASSWORD': 'admin',
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'NAME': env['BC_DB_NAME'],
+        'USER': env['BC_DB_USER'],
+        'PASSWORD': env['BC_DB_PASSWORD'],
+        'HOST': env['BC_DB_HOST'],
+        'PORT': env['BC_DB_PORT'],
     },
 }
 
@@ -156,14 +147,10 @@ AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
 
 AWS_HEADERS = {'Cache-Control': 'max-age=86400', }
 
-# TODO: fix:
-STATIC_URL = '/static/'  # STATIC_URL = "https://%s/" % AWS_S3_CUSTOM_DOMAIN
+STATIC_URL = env['BC_STATIC_URL']
 
-# TODO: fix
-#  STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
-STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
+STATICFILES_STORAGE = env['BC_STATICFILES_STORAGE']
 
-# TODO: fix
 DEPLOYMENT_STAGE = 'dev'
 
 # Login Specific Settings
