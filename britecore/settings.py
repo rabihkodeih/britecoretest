@@ -168,7 +168,6 @@ DEPLOYMENT_STAGE = 'dev'
 
 # Login Specific Settings
 
-# TODO: fix
 LOGIN_URL = r'/%s/login/' % DEPLOYMENT_STAGE
 
 LOGOUT_REDIRECT_URL = 'url_default'

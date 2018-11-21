@@ -12,14 +12,16 @@
             "SecurityGroupIds": [ "sg-3a7adb51" ]
         },
         "aws_environment_variables": {
-            "SECRET_KEY": "yf*e^dqt2b4^lnf8$1kqotk&2w!-ab!nc83jl$++g-ztn8xd^+",
-            "DEBUG": 0,
-            "DB_ENGINE": "django.db.backends.postgresql",
-            "NAME": "britecoretest",
-            "USER": "britecoretestadmin7bli",
-            "PASSWORD": "fhuryg^&^%3et64%&&*derrf2390",
-            "HOST": "rds-postgresql-7bli.cth7mcrqx10m.us-east-2.rds.amazonaws.com",
-            "PORT": "5432"
+            "BC_SECRET_KEY": "yf*e^dqt2b4^lnf8$1kqotk&2w!-ab!nc83jl$++g-ztn8xd^+",
+            "BC_DEBUG": 0,
+            "BC_DB_ENGINE": "django.db.backends.postgresql",
+            "BC_DB_NAME": "britecoretest",
+            "BC_DB_USER": "britecoretestadmin7bli",
+            "BC_DB_PASSWORD": "fhuryg^&^%3et64%&&*derrf2390",
+            "BC_DB_HOST": "rds-postgresql-7bli.cth7mcrqx10m.us-east-2.rds.amazonaws.com",
+            "BC_DB_PORT": "5432",
+            "BC_STATIC_URL": "https://zappa-static-7bli.s3.amazonaws.com/",
+            "BC_STATICFILES_STORAGE": "storages.backends.s3boto.S3BotoStorage"
         }
     }
 }
