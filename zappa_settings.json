@@ -10,6 +10,16 @@
         "vpc_config" : {
             "SubnetIds": [ "subnet-b90aa0d1","subnet-6f5eb315","subnet-e76e49aa" ],
             "SecurityGroupIds": [ "sg-3a7adb51" ]
+        },
+        "aws_environment_variables": {
+            "SECRET_KEY": "yf*e^dqt2b4^lnf8$1kqotk&2w!-ab!nc83jl$++g-ztn8xd^+",
+            "DEBUG": 0,
+            "DB_ENGINE": "django.db.backends.postgresql",
+            "NAME": "britecoretest",
+            "USER": "britecoretestadmin7bli",
+            "PASSWORD": "fhuryg^&^%3et64%&&*derrf2390",
+            "HOST": "rds-postgresql-7bli.cth7mcrqx10m.us-east-2.rds.amazonaws.com",
+            "PORT": "5432"
         }
     }
 }
