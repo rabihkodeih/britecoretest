@@ -20,13 +20,20 @@ from django.contrib.auth import views as auth_views
 
 from main import views
 from main import api
+from britecore.settings import LOGIN_URL
 
 urlpatterns = [
-    # paths
-    path(r'admin/', admin.site.urls), # admin views
-    path(r'login/', auth_views.LoginView.as_view(), name='url_login'), # login view
-    path(r'logout/', auth_views.LogoutView.as_view(), name='url_logout'), # logout view
-    # urlconfs
-    url(r'', include(views.urls)), # web views
-    url(r'api/', include(api.urls)), # api views
+    # admin views
+    path(r'admin/', admin.site.urls),
+    # login view
+    path(LOGIN_URL[1:], auth_views.LoginView.as_view(), name='url_login'),
+    # logout view
+    path(r'logout/', auth_views.LogoutView.as_view(), name='url_logout'),
+    # web views
+    url(r'', include(views.urls)),
+    # api views
+    url(r'api/', include(api.urls)),
 ]
+
+
+# end of file

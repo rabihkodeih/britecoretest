@@ -1,9 +1,3 @@
-'''
-Created on Feb 24, 2018
-
-@author: rabihkodeih
-'''
-
 import json
 from main.models import RiskType
 from main.models import RiskInstance
@@ -19,7 +13,7 @@ class EnumValueSerializer(serializers.ModelSerializer):
     class Meta:
         model = EnumValue
         fields = ('value',)
-        
+
 
 class FieldTypeSerializer(serializers.ModelSerializer):
     class Meta:
@@ -30,10 +24,11 @@ class FieldTypeSerializer(serializers.ModelSerializer):
 class FieldSerializer(serializers.ModelSerializer):
     type = FieldTypeSerializer(read_only=False)
     enum_values = EnumValueSerializer(many=True, read_only=False)
+
     class Meta:
         model = Field
         fields = ('id', 'name', 'type', 'required', 'order', 'enum_values')
-        
+
 
 class RiskTypeSerializer(serializers.ModelSerializer):
     class Meta:
@@ -44,13 +39,13 @@ class RiskTypeSerializer(serializers.ModelSerializer):
 class FieldValueSerializer(serializers.ModelSerializer):
     field = FieldSerializer(read_only=False)
     value = serializers.SerializerMethodField()
+
     def get_value(self, obj):
-        # here we should always return a json object if the value was saved as one
         try:
-            return json.loads(obj.value.replace("'", '"')) # this converts the string into a valid json string
+            return json.loads(obj.value.replace("'", '"'))
         except JSONDecodeError:
             return obj.value
-    
+
     class Meta:
         model = FieldValue
         fields = ('value', 'field')
@@ -59,6 +54,7 @@ class FieldValueSerializer(serializers.ModelSerializer):
 class RiskInstanceSerializer(serializers.ModelSerializer):
     columns = FieldValueSerializer(many=True, read_only=False)
     type = RiskTypeSerializer(read_only=False)
+
     class Meta:
         model = RiskInstance
         fields = ('id', 'title', 'type', 'columns')
@@ -69,3 +65,5 @@ class RiskInstanceShallowSerializer(serializers.ModelSerializer):
         model = RiskInstance
         fields = ('id', 'title')
 
+
+# end of file

@@ -1,9 +1,3 @@
-'''
-Created on Feb 9, 2018
-
-@author: rabihkodeih
-'''
-
 from django.core.management.base import BaseCommand
 from main.models import EnumValue
 from main.models import RiskType
@@ -22,7 +16,8 @@ FIELDTYPES = [('Enum', r'^.*$', False),
 
 RISKTYPES = [{'name': 'CyberLiabilityCoverage',
               'username': 'rabih',
-              'fields': [('Type of Coverage', 'Enum', ('DDOS Attack', 'Compromise of Credentials', 'Malware Infection'), True),        
+              'fields': [('Type of Coverage', 'Enum', ('DDOS Attack', 'Compromise of Credentials', 'Malware Infection'),
+                          True),
                          ('Customer Name', 'Text', (), True),
                          ('Coverage Limit', 'Number', (), True),
                          ('Starting Date', 'Date', (), False)]},
@@ -38,7 +33,8 @@ RISKTYPES = [{'name': 'CyberLiabilityCoverage',
               'username': 'phil',
               'fields': [('Address', 'Text', (), True),
                          ('ZipCode', 'Text', (), True),
-                         ('Property Type', 'Enum', ('Private Property', 'Government Building', 'Church', 'Land'), False),
+                         ('Property Type', 'Enum', ('Private Property', 'Government Building', 'Church', 'Land'),
+                          False),
                          ('Coverage B Limit', 'Number', (), True),
                          ('Date of Renewal', 'Date', (), True)]},
              {'name': 'Automobile',
@@ -69,43 +65,50 @@ RISKINSTANCES = [{'title': 'Prize_3',
                   'values': ['Audi', "{'value': 'Truck'}", 'Daniel King', 65400, "04/27/2018"]},
                  {'title': 'Property_9',
                   'type': 'Property',
-                  'values': ['21 Street Avenue Beirut', '882345', "{'value': 'Private Property'}", 33455, "05/14/2018"]},
+                  'values': ['21 Street Avenue Beirut', '882345', "{'value': 'Private Property'}",
+                             33455, "05/14/2018"]},
                  {'title': 'Property_10',
                   'type': 'Property',
-                  'values': ['Central District Area Bock 5 str 22', '66455', "{'value': 'Government Building'}", 200000, "04/30/2018"]}]
+                  'values': ['Central District Area Bock 5 str 22', '66455', "{'value': 'Government Building'}",
+                             200000, "04/30/2018"]}]
 
 
 class Command(BaseCommand):
     help = 'Creates some test data'
-    
+
     def handle(self, *args, **options):
-        
+
         # delete all existing
         EnumValue.objects.all().delete()
         RiskType.objects.all().delete()
         Field.objects.all().delete()
         FieldType.objects.all().delete()
-        
+
         # creat the actual test data
         for name, regex_validator, nullable in FIELDTYPES:
             FieldType(name=name, regex_validator=regex_validator, nullable=nullable).save()
-             
+
         for risktype in RISKTYPES:
             name = risktype['name']
             username = risktype['username']
             fields = risktype['fields']
             try:
                 user = User.objects.get(username=username)
-            except:
-                message = 'Could not create test data, user with username "%s" does not exit. Please create this user and try again.'
+            except Exception:
+                message = ('Could not create test data, user with username "%s" does'
+                           ' not exit. Please create this user and try again.')
                 self.stdout.write(self.style.ERROR(message % username))
                 return
             risktype = RiskType(name=name, user=user)
             risktype.save()
             for ith, (name, field_type_name, enum_values, required) in enumerate(fields):
                 field_type = FieldType.objects.get(name=field_type_name)
-                field = Field(name=name, type=field_type, risk_type=risktype, order=ith+1, required=required)
-                field.save()                
+                field = Field(name=name,
+                              type=field_type,
+                              risk_type=risktype,
+                              order=ith + 1,
+                              required=required)
+                field.save()
                 for ith, enum_value in enumerate(enum_values):
                     EnumValue(field=field, value=enum_value, order=ith+1).save()
         for ri in RISKINSTANCES:
@@ -118,7 +121,4 @@ class Command(BaseCommand):
         self.stdout.write(self.style.SUCCESS('Test data created successfully'))
 
 
-
-
-
-
+# end of file

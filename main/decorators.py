@@ -1,8 +1,3 @@
-'''
-Created on Feb 24, 2018
-
-@author: rabihkodeih
-'''
 from django.utils.six import wraps
 from django.http.response import HttpResponseForbidden
 
@@ -20,3 +15,6 @@ def requires_authentication(view):
             return result
         return HttpResponseForbidden()
     return wrapper
+
+
+# end of file

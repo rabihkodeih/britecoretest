@@ -1,8 +1,3 @@
-'''
-Created on Feb 4, 2018
-
-@author: rabihkodeih
-'''
 from django.http.response import JsonResponse
 from django.urls.conf import path
 from main.models import RiskType
@@ -18,7 +13,7 @@ from rest_framework.decorators import authentication_classes
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.authentication import BasicAuthentication
-from main.utils import save_riskinstance 
+from main.utils import save_riskinstance
 from main.utils import validate_riskinstance
 from django.db import transaction
 from django.db import IntegrityError
@@ -41,7 +36,8 @@ def riskinstance_new(request, risktype_id=0):
         risktype = result[0]
         fields = risktype.fields.all()
         riskinstance = RiskInstance(id=0, title='', type=risktype)
-        fieldvalues = [FieldValue(id=0, value='', field=f, riskinstance=riskinstance) for f in fields]
+        fieldvalues = [FieldValue(id=0, value='', field=f, riskinstance=riskinstance)
+                       for f in fields]
         columns_serializer = FieldValueSerializer(fieldvalues, many=True)
         data = RiskInstanceSerializer(riskinstance).data
         data['columns'] = columns_serializer.data
@@ -58,7 +54,7 @@ def riskinstance(request, riskinstance_id=0):
         2- To save a riskinstance (POST)
         3- To delete a riskinstance (DELETE)
     @param riskinstance_id: the id of the riskinstance object
-    @return: JSON object in case 1, and HTTP response object in cases 2 and 3 
+    @return: JSON object in case 1, and HTTP response object in cases 2 and 3
     '''
     if request.method == "GET":
         data = {}
@@ -77,7 +73,7 @@ def riskinstance(request, riskinstance_id=0):
                 with transaction.atomic():
                     save_riskinstance(request.data)
             except IntegrityError:
-                message = 'There is another risk form with the same title.\nPlease chose another title.' 
+                message = 'There is another risk form with the same title.\nPlease chose another title.'
                 response = Response({'message': message}, status=status.HTTP_406_NOT_ACCEPTABLE)
             except Exception:
                 logger.error(request.data)
@@ -94,39 +90,39 @@ def riskinstance(request, riskinstance_id=0):
                 riskinstance.delete()
             else:
                 response = Response({}, status=status.HTTP_204_NO_CONTENT)
-        except:
+        except Exception:
             logger.error(request.data)
             logging.exception('')
-            response = Response({}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)        
+            response = Response({}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         return response
     return Response({}, status=status.HTTP_400_BAD_REQUEST)
-    
+
 
 @requires_authentication
 @api_view(["GET"])
 def risktypes(request):
-    ''' 
+    '''
     This api function is used to get all risktypes associated with the current session user
     @param request: django request object
-    @return: a list of JSON object 
+    @return: a list of JSON object
     '''
     risktypes = RiskType.objects.filter(user=request.user).select_related()
     serializer = RiskTypeSerializer(risktypes, many=True)
-    data = serializer.data 
+    data = serializer.data
     return JsonResponse(data, safe=False)
 
 
 @requires_authentication
 @api_view(["GET"])
 def riskinstances(request):
-    ''' 
+    '''
     This api function is used to get all riskinstances associated with the current session user
     @param request: django request object
-    @return: a list of JSON object 
+    @return: a list of JSON object
     '''
     riskinstances = RiskInstance.objects.filter(type__user=request.user).order_by('title').select_related()
     serializer = RiskInstanceShallowSerializer(riskinstances, many=True)
-    data = serializer.data 
+    data = serializer.data
     return JsonResponse(data, safe=False)
 
 
@@ -136,3 +132,6 @@ urls = [path('risktypes/', risktypes, name='url_risktypes'),
         path('riskinstance/<int:riskinstance_id>/', riskinstance, name='url_riskinstance_arg'),
         path('riskinstance/', riskinstance, name='url_riskinstance'),
         path('riskinstances/', riskinstances, name='url_riskinstances')]
+
+
+# end of file
