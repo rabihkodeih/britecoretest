@@ -1,5 +1,7 @@
+source init_dev_env.sh
 python manage.py collectstatic
 zappa update dev
 python manage.py makemigrations
 python manage.py migrate
 python manage.py test
+source init_local_env.sh
