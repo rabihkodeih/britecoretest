@@ -7,6 +7,7 @@ from britecore.settings import LOGIN_URL
 
 
 class MainView(View):
+
     @method_decorator(login_required(login_url=LOGIN_URL))
     def get(self, request):
         context = {}

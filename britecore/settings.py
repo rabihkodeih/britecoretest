@@ -133,8 +133,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
-# STATIC_URL = '/static/'
-
+STATIC_URL = env['BC_STATIC_URL']
 
 # Static files on Amazon S3
 # http://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html
@@ -146,8 +145,6 @@ AWS_STORAGE_BUCKET_NAME = 'zappa-static-7bli'
 AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
 
 AWS_HEADERS = {'Cache-Control': 'max-age=86400', }
-
-STATIC_URL = env['BC_STATIC_URL']
 
 STATICFILES_STORAGE = env['BC_STATICFILES_STORAGE']
 
