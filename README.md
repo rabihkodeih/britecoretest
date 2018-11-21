@@ -87,7 +87,7 @@ First make sure that `Python3`, `pip3` and `virtualenv` are all installed and wo
 
     apt-get update
     apt-get dist-upgrade
-    apt-get install -y python3-dev virtualenv gcc libmysqlclient-dev
+    apt-get install -y python3-dev virtualenv gcc postgresql-9.6 
 
 Clone the repository into a destination directory, cd into it then create your virtual env using
 
@@ -115,8 +115,9 @@ Set the environment variables as desired, example values are:
 | BC_STATIC_URL | /static/ 
 | BC_STATICFILES_STORAGE | django.contrib.staticfiles.storage.StaticFilesStorage
 
+Two bash scripts are created for convenience: `init_local_env.sh` and `init_prod_env.sh`.
 
-In a plsql console, create the databases using the corresponding environment variables. 
+In a plsql console, create the database using the corresponding environment variables. 
 
 Now create the admin related tables:
 
