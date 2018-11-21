@@ -1,0 +1,8 @@
+__pycache__
+env
+README.md
+init_env.sh
+.DS_Store
+.git
+.gitignore
+

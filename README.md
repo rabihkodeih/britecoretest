@@ -3,10 +3,13 @@
 # Backend
 
 ## Server Side
-***Django v2.02*** with ***Python 3.6***, ***Postgres10*** and ***django rest framework*** was used in the backbone of the server. Several API endpoints (using the ***django rest framework***) and a single page view have been implemented as in the requirements. The deployment scheme used AWS services of ***S3***, ***Lambda***, ***RDS*** and ***Cloud Formation***. ***Zappa*** (along with ***virtualenv***) was used for the whole deployment process. Static files were served from ***S3*** bucket instance. A `local_settings.py` file was used to separate the local development settings from the production settings, this file isn't tracked by either ***zappa*** nor ***git***. Finaly, its worth noting that test data was generated using a custom written django managment command script named `createtestdata.py`.
+***Django 2*** with ***Python 3.6***, ***Postgres10*** and ***django rest framework*** was used in the backbone of the server. Several API endpoints (using the ***django rest framework***) and a single page view have been implemented as in the requirements. The deployment scheme used AWS services of ***S3***, ***Lambda***, ***RDS*** and ***Cloud Formation***. ***Zappa*** (along with ***virtualenv***) was used for the whole deployment process. Static files were served from ***S3*** bucket instance. 
+Environment variable were used to separate the production settings from development settings. The command `source init_local_env.sh` is used to set local environment variables. The production environment variables are set for production in `zappa_settings.json`. 
+Finaly, its worth noting that test data was generated using a custom written django managment command script named `createtestdata.py`. Further deployment options using ***Docker*** containers and ***gunicorn*** with ***whitenoise*** are also provided, see the end of this readme file for further details.
 
 A working instance of the project can be found at: 
 https://f2uddx7bli.execute-api.us-east-2.amazonaws.com/dev/
+
 
 ## Db Model
 
@@ -36,6 +39,7 @@ The **FieldValue** is a simple model that holds data of a field in a text data f
 
 Finally the **EnumValue** model represents the different enum values that are associated with a field of type "Enum" (or any equivalent type). Note that the alternative of relating this model to **FieldType** rather than **Field** wouldn't have made sense since this would have required a lot more field type records to add.
 
+
 # Frontend
 
 The whole frontend application was implemented in a single relatively small javascript file `app.js`. The reactive framework ***Vue.js*** was the main library used in the backend along with ***jquery3***, ***axios.js*** (promise based ajax calls), ***bootstrap4*** (for styling) and ***gijgo.js*** (used to render the date-picker widget). The modern flavor of ***JavaScript ES6*** has been used in `app.js`. The vue component reside in a separate `js\vue_components\` directory.
@@ -47,26 +51,157 @@ The app also includes basic user session management (login/logout, all views req
 This is a screenshot of the UI:
 ![UI_SCREENSHOT IMAGE](https://github.com/rabihkodeih/britecoretest/blob/master/UI_screenshot.png)
 
+
 # Tests
 
 A standard django test suite was employed. There are two test cases, one for login sessions and db models, the other for the api section.
+To run test, simply issue:
 
-# Deployment
+    ./manage.py test
+
+
+# Deployment with Zappa and AWS Lambda
 
 After cloning this repository to a local workding directry and setting up a local working copy of the project, run the createtestdata command: 
 
-```python manage.py createtestdata```
+    python manage.py createtestdata
 
 This will create an initial set of data on the local server. Now make sure that the app is working correctly locally.
 
 To deploy, just run the command 
 
-```bash deploy_dev``` 
+    bash deploy_dev 
 
 found on the root folder (this assumes that you allready have your AWS account settings correctly configured, to make sure edit the file `zappa_settings.js` and update the settings as required). The `deploy_dev` bash script contains all the necessary steps for the deployment including collecting static files and running the tests.
 
 To create test data on the server, simply run the following command: 
 
-```zappa manage dev createtestdata```
+    zappa manage dev createtestdata
 
 This will create the initial test data as we have done on the local environment. Now everything should be ready, simply navigate to the production url and experiment.
+
+
+# Installation on Local Dev Machine
+
+First make sure that `Python3`, `pip3` and `virtualenv` are all installed and working fine:
+
+    apt-get update
+    apt-get dist-upgrade
+    apt-get install -y python3-dev virtualenv gcc libmysqlclient-dev
+
+Clone the repository into a destination directory, cd into it then create your virtual env using
+
+    virtualenv -p python3 env
+    
+and activate it by
+
+    . env/bin/activate
+    
+Now you can install the requirements by
+
+    pip3 install -r requirements.txt
+        
+Set the environment variables as desired, example values are:
+
+| Key                       | Value                |
+| --------------------------| -------------------- |
+| BC_SECRET_KEY | yf*e^dqt2b4^lnf8$1kqotk&2w!-ab!nc83jl$++g-ztn8xd^+ |
+| BC_DEBUG | 1 |
+| BC_DB_NAME | britecore |
+| BC_DB_USER | postgres |
+| BC_DB_PASSWORD | admin |
+| BC_DB_HOST | localhost |
+| BC_DB_PORT | 5432 |
+| BC_STATIC_URL | /static/ 
+| BC_STATICFILES_STORAGE | django.contrib.staticfiles.storage.StaticFilesStorage
+
+
+In a plsql console, create the databases using the corresponding environment variables. 
+
+Now create the admin related tables:
+
+    ./manage.py makemigrations
+    ./manage.py migrate
+    
+Before we can use the admin site, we need to create a superuser login and the test data:
+
+    ./manage.py createsuperuser
+    ./manage.py createtestdata
+
+
+### Using Local Development Server 
+
+Run the Django local server using:
+
+    ./manage.py runserver
+    
+and visit `http://127.0.0.1:8000/admin/` or `http://127.0.0.1:8000/`.
+
+    
+### Using Gunicorn
+
+Simply issue the following command from the root source folder:
+
+    gunicorn britecore.wsgi:application \
+        --name britecore_worker \
+        --bind 0.0.0.0:8000 \
+        --workers=1 \
+        --daemon
+
+If you don't want to run the server in daemon mode, remove the last option.
+
+Now visit `http://127.0.0.1:8000/admin/` or `http://127.0.0.1:8000/`.
+
+
+# Installation Using Docker Containers
+
+Clone the repository into a project source folder, then build your image:
+
+    cd <project source folder>
+    docker build -t britecore .
+
+When done, edit the file run_container.sh, which looks like this for example:
+
+    #!/bin/bash
+    docker run -it -p 8000:8000 \
+    -e export BC_SECRET_KEY='yf*e^dqt2b4^lnf8$1kqotk&2w!-ab!nc83jl$++g-ztn8xd^+' \
+    -e export BC_DEBUG=0 \
+    -e export BC_DB_NAME=britecoretest \
+    -e export BC_DB_USER=britecoretestadmin7bli \
+    -e export BC_DB_PASSWORD=fhuryg^&^%3et64%&&*derrf2390 \
+    -e export BC_DB_HOST=rds-postgresql-7bli.cth7mcrqx10m.us-east-2.rds.amazonaws.com \
+    -e export BC_DB_PORT=5432 \
+    -e export BC_STATIC_URL='https://zappa-static-7bli.s3.amazonaws.com/' \
+    -e export BC_STATICFILES_STORAGE='storages.backends.s3boto.S3BotoStorage' \
+    --name
+    britecore:latest
+
+
+and set the desired production values. Now run the container with:
+
+    ./run_container.sh
+    
+To setup the database, create a database named `britecoretest` on your chosen database hosting machine.
+
+Now connect to the container as follows:
+
+    docker exec -it {container name} /bin/bash
+
+then from the container bash terminal perform:
+
+    ./manage.py makemigrations
+    ./manage.py migrate
+    ./manage.py createsuperuser
+    ./manage.py createtestdata
+
+and now you can visit the admin site in the container host machine at `http://127.0.0.1:8000/admin/`
+or the main site at `http://127.0.0.1:8000/`.
+
+
+
+
+
+
+
+
+
